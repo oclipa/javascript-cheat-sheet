@@ -5,12 +5,6 @@
 
 ## Javascript
 
-* What are two-way data binding and one-way data flow, and how are they different?
-* What are the pros and cons of monolithic vs microservice architectures?
-* What is asynchronous programming, and why is it important in JavaScript?
-
-* template strings 'some text and a ${templateString} can be output ${likeThis}'
-
 &nbsp;
 
 -------------------------------------------------------------------------------------------------------
@@ -651,6 +645,7 @@ export default Quote;
 <button type="button" class="collapsible">+ Monolithic vs Microservice Architectures</button>   
 <div class="content" style="display: none;" markdown="1">
 
+What are the pros and cons of monolithic vs microservice architectures?
 
 </div>
 </div>
@@ -660,6 +655,7 @@ export default Quote;
 <button type="button" class="collapsible">+ Asynchronous Programming</button>   
 <div class="content" style="display: none;" markdown="1">
 
+What is asynchronous programming, and why is it important in JavaScript?
 
 </div>
 </div>
@@ -1269,6 +1265,15 @@ console.log(months);
 // Array ["Jan", "Feb", "March", 
 //          "April", "May"]
 ```
+
+</div>
+</div>
+
+<div id="semi">
+<button type="button" class="collapsible">+ Template Strings</button>   
+<div class="content" style="display: none;" markdown="1">
+
+* template strings 'some text and a ${templateString} can be output ${likeThis}'
 
 </div>
 </div>
