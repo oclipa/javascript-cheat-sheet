@@ -26,14 +26,41 @@ Javascript is what is termed a multi-paradigm language, which means that it supp
 **Prototypal Inheritance**
 
 * Objects without classes.
-   * Each object has a prototype: Object.prototype.
-   * The prototype cannot access private variables in a class (they would need to be accessed using getters and setters).
-* Protoype delegation (a.k.a OLOO).
+   * Each object instance has a prototype: Object.prototype, which is itself an object instance.
+   * The prototype cannot access private variables in an child instance (they need to be accessed using getters and setters).
+* Protoype delegation (the prototype chain)
+   * a.k.a Object Linked to Other Objects - OLOO.
    * If a function is not found in the object, the engine will then look for it in the prototype.
+* Prototype concatenation (`Object.assign()`)
+   * Can pick and choose which properties to inherit (and dynamically change this over time).
+* Function inheritance
+   * Using a function to create a closure.
 
-For a more in-depth discussion regarding how you describe prototypal inheritance, go [here](https://alexsexton.com/blog/2013/04/understanding-javascript-inheritance/).  
+Note that prototypal inheritance is **not the same as classical inheritance**.  
+   * In classical inheritance, classes are provided with a blueprint that is built from a hierarchical chain of sub-classes.  An instantiated class will be a single object with all of the properties of the sub-classes.
+      * Pros:
+         * Basic concepts easier to understand and interpret.
+         * Code tends to be easier to read.
+         * Better IDE support.
+      * Cons:
+         * Tight coupling, which makes it difficult to makes changes to base classes.
+         * Multiple inheritance is very difficult to implement.
+         * Brittle architecture, since bad designs are often baked into hierarchies so hard to fix.
+         * Cannot choose what to inherit (Gorilla/Banana analogy, although can be minimized using interfaces).
+   * In prototypal inheritance, objects concatenate properties from multiple objects in a flat (or much flatter) hierarchy. 
+      * Pros:
+         * Loose coupling.
+         * Easier to maintain and update code (e.g. add additional properties or functionality at a later date).
+         * Easier to scale across multiple processors.
+      * Cons:
+         * Code can be harder to read.
+         * Steeper learning curve (particularly if coming from an OO background; scoping!)
+   
+Javascript does not support (true) classical inheritance.
 
-Alternatively, the following example is the conclusion of that article:
+*It is difficult to identify any case where classical inheritance is more appropriate than prototypal inheritance!  The only case appears to be "if the language you are using depends on classical inheritance".*
+
+A more in-depth discussion regarding descriptions of prototypal inheritance, can be found [here](https://alexsexton.com/blog/2013/04/understanding-javascript-inheritance/).  The following is extracted from that article:
 
 ```javascript
 // define a prototype object with defaults.
@@ -79,17 +106,75 @@ myWiderOptions = Object.assign(
 
 **Functional Programming**
 
-   * Enabled by lambdas with closure.
+At it's core, functional programming is based on the three main principles:
+
+* Functional Composition
+   * Function composition is the process of combining two or more functions in order to produce a new function, e.g. `f(g(x))`.
+   * There are two approaches to composition: compose and pipe.
+
+*compose*
+
+```
+// defining compose function
+// this evalutes the functions 
+// right-to-left (or bottom-to-top) 
+// e.g. { ... 4th, 3rd, 2nd, 1st }
+const compose = (...functions) => data =>
+  functions.reduceRight((value, func) => func(value), data);
+
+// e.g.
+pipe(
+  reverse,
+  get6Characters,
+  uppercase,
+  getName,
+)({ name: 'Fred Flintstone' })
+
+// = [F DERF]
+```
+*pipe*
+
+```
+// defining pipe function
+// this evalutes the functions 
+// left-to-right ( or top-to-bottom) 
+// e.g. { 1st, 2nd, 3rd, 4th ... }
+const pipe = (...functions) => data =>
+  functions.reduce((value, func) => func(value), data);
+
+// e.g.
+pipe(
+  getName,
+  uppercase,
+  get6Characters,
+  reverse 
+)({ name: 'Fred Flintstone' })
+
+// = [F DERF]
+```
+
+* Avoiding Shared State
+  * A function should not have any internal state and it should certainly not share that state with other functions.
+  * A function should only be aware of the data passed into it as input.
+  * The problem with shared state is that in order to understand the effects of a function, it is necessary to know the entire history of every shared variable that the function uses or affects.
+  * If state is shared, race-conditions can result, where functions compete to access resources.  This can mean that the order in which function calls can result is different output.
+
+* Avoiding Mutable Data
+   * Mutable data is any data that can changed after it was created.
+   * An immutable value or object cannot be changed, so every update creates new value, leaving the old one untouched.
+   
+The ideal form of a function is the pure function, a function for which the same inputs always result in the same output, and there are no side-effects (i.e. no outside effects other than the return value).
+
+Functional programming is supported by features such a:
+   * First-class functions (i.e. functions are treated as objects)
+   * Functions are arguments (i.e. the ability to pass a function as an argument)
+   * Higher order functions (i.e. functions that accept other functions as input and return a function)
+   
+These features are typically enabled by combining **lambdas** (abstractions that can be passed into functions as data) with **closures** (encapsulation of data with functions such that they can be passed around).
 
 </div>
 </div>
 
-* What is functional programming?
-* What is the difference between classical inheritance and prototypal inheritance?
-* What are the pros and cons of functional programming vs object-oriented programming?
-* When is classical inheritance an appropriate choice?
-* When is prototypal inheritance an appropriate choice?
-* What does “favor object composition over class inheritance” mean?
 * What are two-way data binding and one-way data flow, and how are they different?
 * What are the pros and cons of monolithic vs microservice architectures?
 * What is asynchronous programming, and why is it important in JavaScript?
@@ -122,16 +207,16 @@ One of the chief advantages of pure functions is that, as long as the result is 
 
 An indicator of an impure function is one that can be called without using its return value.  This implies that it produces side-effects.
 
-In an ideal world, an application would be composed entirely of pure functions.  In practice, impure functions are required (e.g. Math.random(); Data.getTime(); anything that updates the UI).
+In an ideal world, an application would be composed entirely of pure functions.  In practice, impure functions are required (e.g. Math.random(); Data.getTime(); anything that updates the UI or data source).
 
 </div>
 </div>
 
 <div id="funccomp">
-<button type="button" class="collapsible">+ Function Composition</button>   
+<button type="button" class="collapsible">+ Currying</button>   
 <div class="content" style="display: none;" markdown="1">
 
-Function composition is the process of combining two or more functions in order to produce a new function, e.g. `f(g(x))`.
+
 
 Currying???  https://blog.bitsrc.io/understanding-currying-in-javascript-ceb2188c339
 
@@ -480,9 +565,15 @@ The general form is `(function(){ })();`.
 <button type="button" class="collapsible">+ Closures</button>   
 <div class="content" style="display: none;" markdown="1">
 
-A more in-depth discussion of closures is given [here](https://oclipa.github.io/csharp-cheat-sheet/#closures?expand) (in the context of C#, but the general principles apply to Javascript).  Following are a couple of illustrative examples:
+A more in-depth discussion of closures is given [here](https://oclipa.github.io/csharp-cheat-sheet/#closures?expand) (in the context of C#, but the general principles apply to Javascript).  
 
-In this first example, although at first glance this might be expected to print out (0, 1, 2, ...etc), the actual output will be (10, 10, 10, ...etc).  This is because `i` exists in the scope of the `createPrinters` function, so the latest value (10) will be used when the function is evaluated.
+Im suuary, there are two basic uses cases:
+1. Storing the state of data to be used in a particular method at a later time.
+1. Hiding data but leaving it accessible to a particular method.
+
+The following are a couple of illustrative examples...
+
+This first example demonstrates a problem that closures can solve.  At first glance this might be expected to print out (0, 1, 2, ...etc), but the actual output will be (10, 10, 10, ...etc).  This is because `i` exists in the scope of the `createPrinters` function, so the latest value (10) will be used when the function is evaluated.
 
 ```javascript
 const createPrinters = () => { 
@@ -516,7 +607,7 @@ printers.map(printer => {
             });
 
 ```
-In this second example, `val` is scoped within a closure (basically, a couple of nested functions), so it will retain whichever value it had when the closure was instantiated.  When the `createPrinters` function is evaluated, the output will be the less surprising (0, 1, 2, ...etc).
+This second example shows a solution to the first example. `val` is scoped within a closure (basically, a couple of nested functions), so it will retain whichever value it had when the closure was instantiated.  When the `createPrinters` function is evaluated, the output will be the less surprising (0, 1, 2, ...etc).
 
 ```javascript
 const createPrinters = () => { 
@@ -552,20 +643,33 @@ printers.map(printer => {
             })
 ```
 
-Another example demonstrating how a closure can be used for data privacy:
+This final example demonstrates how a closure can be used for data privacy.  In this case, our hero's profession can only be revealed by asking him directly (with a password!), unlike his appearance, which can be seen just by looking at him:
 
 ```javascript
-let animal = {
+const animal = {
   animalType: 'animal',
  
   describe () {
-    return `An ${this.animalType} with ${this.furColor} fur, 
-      ${this.legs} legs, and a ${this.tail} tail.`;
+    return 'An ' + this.animalType + ' with ' + this.furColor + 
+      ' fur, ' + this.legs + ' legs, and a ' + this.tail + ' tail.';
   }
 };
  
-let mouse = function mouse () {
-  let secret = 'secret agent';
+const mouse = () => {
+  const secret = 'spy';
+
+  const testPassword = (password) => {
+    const privateKey = -2133058532;
+
+    let hash = 0; 
+    if (password.length === 0) return hash; 
+    for (i = 0; i < password.length; i++) { 
+      char = password.charCodeAt(i); 
+      hash = ((hash << 5) - hash) + char; 
+      hash = hash & hash; 
+    } 
+    return hash === privateKey; 
+  };
 
   return Object.assign(
     Object.create(animal), 
@@ -574,14 +678,27 @@ let mouse = function mouse () {
       furColor: 'brown',
       legs: 4,
       tail: 'long, skinny',
-      profession () {
-        return secret;
+      profession: (password) => {
+        return testPassword(password) ? 
+                  secret : "secret";
       }
     }
   );
 };
  
-let james = mouse();
+const peek = (animal) => {
+  console.log("Peek:");
+  console.log(animal);
+};
+const ask = (animal, password) => {
+  console.log("Ask:");
+  console.log(animal.profession(password));
+};
+
+const james = mouse();
+
+peek(james);
+ask(james, "skyfall");
 ```
 </div>
 </div>
