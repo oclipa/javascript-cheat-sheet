@@ -84,17 +84,17 @@ myWiderOptions = Object.assign(
 </div>
 </div>
 
-What is functional programming?
-What is the difference between classical inheritance and prototypal inheritance?
-What are the pros and cons of functional programming vs object-oriented programming?
-When is classical inheritance an appropriate choice?
-When is prototypal inheritance an appropriate choice?
-What does “favor object composition over class inheritance” mean?
-What are two-way data binding and one-way data flow, and how are they different?
-What are the pros and cons of monolithic vs microservice architectures?
-What is asynchronous programming, and why is it important in JavaScript?
+* What is functional programming?
+* What is the difference between classical inheritance and prototypal inheritance?
+* What are the pros and cons of functional programming vs object-oriented programming?
+* When is classical inheritance an appropriate choice?
+* When is prototypal inheritance an appropriate choice?
+* What does “favor object composition over class inheritance” mean?
+* What are two-way data binding and one-way data flow, and how are they different?
+* What are the pros and cons of monolithic vs microservice architectures?
+* What is asynchronous programming, and why is it important in JavaScript?
 
-template strings 'some text and a ${templateString} can be output ${likeThis}'
+* template strings 'some text and a ${templateString} can be output ${likeThis}'
 
 <div id="lambda">
 <button type="button" class="collapsible">+ Lambdas</button>   
@@ -234,7 +234,7 @@ let mouse = {
 
 *Using a Factory Function*
 
-```
+```javascript
 let animal = {
   animalType: 'animal',
  
@@ -295,7 +295,7 @@ let mouse = Object.assign(
 
 *Using Prototypal Inheritance*
 
-```
+```javascript
 function Rodent(rodentType, furColor, legs, tail) {
   this.rodentType = rodentType;
   this.furColor = furColor;
@@ -554,7 +554,7 @@ printers.map(printer => {
 
 Another example demonstrating how a closure can be used for data privacy:
 
-```
+```javascript
 let animal = {
   animalType: 'animal',
  
@@ -592,7 +592,7 @@ let james = mouse();
 
 "Traditional" Function (ES5):
 
-```jsx
+```javascript
 function myFunc() {
   console.log(arguments);
   return ...
