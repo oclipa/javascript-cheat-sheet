@@ -10,6 +10,13 @@ Javascript is what is termed a multi-paradigm language, which means that it supp
    * Prototypal Inheritance
    * Functional Programming
 
+
+* What are two-way data binding and one-way data flow, and how are they different?
+* What are the pros and cons of monolithic vs microservice architectures?
+* What is asynchronous programming, and why is it important in JavaScript?
+
+* template strings 'some text and a ${templateString} can be output ${likeThis}'
+
 &nbsp;
 
 -------------------------------------------------------------------------------------------------------
@@ -130,7 +137,7 @@ At it's core, functional programming is based on the four main principles:
 
 *compose*
 
-```
+```javascript
 // defining compose function
 // this evalutes the functions 
 // right-to-left (or bottom-to-top) 
@@ -150,7 +157,7 @@ pipe(
 ```
 *pipe*
 
-```
+```javascript
 // defining pipe function
 // this evalutes the functions 
 // left-to-right ( or top-to-bottom) 
@@ -227,11 +234,25 @@ These features are typically enabled by combining **lambdas** (abstractions that
 </div>
 </div>
 
-* What are two-way data binding and one-way data flow, and how are they different?
-* What are the pros and cons of monolithic vs microservice architectures?
-* What is asynchronous programming, and why is it important in JavaScript?
+<div id="purefunc">
+<button type="button" class="collapsible">+ Pure Functions</button>   
+<div class="content" style="display: none;" markdown="1">
 
-* template strings 'some text and a ${templateString} can be output ${likeThis}'
+A pure function is one that:
+
+   * Given the same inputs, always returns the same output.
+   * Has no side-effects.
+
+Essentially, these are the essence of functional programming.
+
+One of the chief advantages of pure functions is that, as long as the result is the same, they can be replaced without changing the meaning of the program, which is useful for things like micro-services and unit testing.  In addition, since they are guaranteed to be completely self-contained, they are great candidates for situations that require concurrency.
+
+An indicator of an impure function is one that can be called without using its return value.  This implies that it produces side-effects.
+
+In an ideal world, an application would be composed entirely of pure functions.  In practice, impure functions are required (e.g. Math.random(); Data.getTime(); anything that updates the UI or data source).
+
+</div>
+</div>
 
 <div id="lambda">
 <button type="button" class="collapsible">+ Lambdas</button>   
@@ -246,21 +267,145 @@ In summary: Lambda means "function used as data".
 </div>
 </div>
 
-<div id="purefunc">
-<button type="button" class="collapsible">+ Pure Functions</button>   
+<div id="closures">
+<button type="button" class="collapsible">+ Closures</button>   
 <div class="content" style="display: none;" markdown="1">
 
-A pure function is one that:
+A more in-depth discussion of closures is given [here](https://oclipa.github.io/csharp-cheat-sheet/#closures?expand) (in the context of C#, but the general principles apply to Javascript).  
 
-   * Given the same inputs, always returns the same output.
-   * Has no side-effects (see below).
+Im suuary, there are two basic uses cases:
+1. Storing the state of data to be used in a particular method at a later time.
+1. Hiding data but leaving it accessible to a particular method.
 
-One of the chief advantages of pure functions is that, as long as the result is the same, they can be replaced without changing the meaning of the program, which is useful for things like micro-services and unit testing.  In addition, since they are guaranteed to be completely self-contained, they are great candidates for situations that require concurrency.
+The following are a couple of illustrative examples...
 
-An indicator of an impure function is one that can be called without using its return value.  This implies that it produces side-effects.
+This first example demonstrates a problem that closures can solve.  At first glance this might be expected to print out (0, 1, 2, ...etc), but the actual output will be (10, 10, 10, ...etc).  This is because `i` exists in the scope of the `createPrinters` function, so the latest value (10) will be used when the function is evaluated.
 
-In an ideal world, an application would be composed entirely of pure functions.  In practice, impure functions are required (e.g. Math.random(); Data.getTime(); anything that updates the UI or data source).
+```javascript
+const createPrinters = () => { 
+  
+  const arr = []; 
+  
+  // i is scoped within this function,
+  // and so will retain whatever value
+  // was set when the for loop completes.
+  let i; 
+  for (i = 0; i < 10; i++)  
+  { 
+    // storing anonymous function 
+    arr[i] = () => { 
+    
+      // in arrow functions, variables are
+      // scoped within the parent block 
+      // (in this case, within the for loop)
+      return i; 
+    };
+  } 
 
+  // returning the array. 
+  return arr; 
+}
+
+const printers = createPrinters(); 
+  
+printers.map(printer => { 
+              console.log(printer()); 
+            });
+
+```
+This second example shows a solution to the first example. `val` is scoped within a closure (basically, a couple of nested functions), so it will retain whichever value it had when the closure was instantiated.  When the `createPrinters` function is evaluated, the output will be the less surprising (0, 1, 2, ...etc).
+
+```javascript
+const createPrinters = () => { 
+    
+  const createClosure = (val) => { 
+    
+    // val is scoped within this function,
+    // and so will retain whatever value
+    // was passed in via the arguments.
+    return () => {
+    
+      // in arrow functions, variables are
+      // scoped within the parent block (in
+      // this case, within createClosure)
+      return val; 
+    }; 
+  };
+  
+  var arr = []; 
+  var i; 
+  for (i = 0; i < 10; i++)  
+  { 
+    // storing the closure function 
+    arr[i] = createClosure(i); 
+  } 
+  return arr; 
+};
+
+var printers = createPrinters(); 
+
+printers.map(printer => { 
+              console.log(printer()); 
+            })
+```
+
+This final example demonstrates how a closure can be used for data privacy.  In this case, our hero's profession can only be revealed by asking him directly (with a password!), unlike his appearance, which can be seen just by looking at him:
+
+```javascript
+const animal = {
+  animalType: 'animal',
+ 
+  describe () {
+    return 'An ' + this.animalType + ' with ' + this.furColor + 
+      ' fur, ' + this.legs + ' legs, and a ' + this.tail + ' tail.';
+  }
+};
+ 
+const mouse = () => {
+  const secret = 'spy';
+
+  const testPassword = (password) => {
+    const privateKey = -2133058532;
+
+    let hash = 0; 
+    if (password.length === 0) return hash; 
+    for (i = 0; i < password.length; i++) { 
+      char = password.charCodeAt(i); 
+      hash = ((hash << 5) - hash) + char; 
+      hash = hash & hash; 
+    } 
+    return hash === privateKey; 
+  };
+
+  return Object.assign(
+    Object.create(animal), 
+    {
+      animalType: 'mouse',
+      furColor: 'brown',
+      legs: 4,
+      tail: 'long, skinny',
+      profession: (password) => {
+        return testPassword(password) ? 
+                  secret : "secret";
+      }
+    }
+  );
+};
+ 
+const peek = (animal) => {
+  console.log("Peek:");
+  console.log(animal);
+};
+const ask = (animal, password) => {
+  console.log("Ask:");
+  console.log(animal.profession(password));
+};
+
+const james = mouse();
+
+peek(james);
+ask(james, "skyfall");
+```
 </div>
 </div>
 
@@ -573,148 +718,6 @@ Self-Executing Functions (a.k.a Immediately Invoked Function Expressions) are fu
 The general form is `(function(){ })();`.  
    * The parentheses around the function are to ensure that the code within the function is contained in the private scope of the function.
    * The parentheses at the end of the function are what invokes the function.
-</div>
-</div>
-
-<div id="closures">
-<button type="button" class="collapsible">+ Closures</button>   
-<div class="content" style="display: none;" markdown="1">
-
-A more in-depth discussion of closures is given [here](https://oclipa.github.io/csharp-cheat-sheet/#closures?expand) (in the context of C#, but the general principles apply to Javascript).  
-
-Im suuary, there are two basic uses cases:
-1. Storing the state of data to be used in a particular method at a later time.
-1. Hiding data but leaving it accessible to a particular method.
-
-The following are a couple of illustrative examples...
-
-This first example demonstrates a problem that closures can solve.  At first glance this might be expected to print out (0, 1, 2, ...etc), but the actual output will be (10, 10, 10, ...etc).  This is because `i` exists in the scope of the `createPrinters` function, so the latest value (10) will be used when the function is evaluated.
-
-```javascript
-const createPrinters = () => { 
-  
-  const arr = []; 
-  
-  // i is scoped within this function,
-  // and so will retain whatever value
-  // was set when the for loop completes.
-  let i; 
-  for (i = 0; i < 10; i++)  
-  { 
-    // storing anonymous function 
-    arr[i] = () => { 
-    
-      // in arrow functions, variables are
-      // scoped within the parent block 
-      // (in this case, within the for loop)
-      return i; 
-    };
-  } 
-
-  // returning the array. 
-  return arr; 
-}
-
-const printers = createPrinters(); 
-  
-printers.map(printer => { 
-              console.log(printer()); 
-            });
-
-```
-This second example shows a solution to the first example. `val` is scoped within a closure (basically, a couple of nested functions), so it will retain whichever value it had when the closure was instantiated.  When the `createPrinters` function is evaluated, the output will be the less surprising (0, 1, 2, ...etc).
-
-```javascript
-const createPrinters = () => { 
-    
-  const createClosure = (val) => { 
-    
-    // val is scoped within this function,
-    // and so will retain whatever value
-    // was passed in via the arguments.
-    return () => {
-    
-      // in arrow functions, variables are
-      // scoped within the parent block (in
-      // this case, within createClosure)
-      return val; 
-    }; 
-  };
-  
-  var arr = []; 
-  var i; 
-  for (i = 0; i < 10; i++)  
-  { 
-    // storing the closure function 
-    arr[i] = createClosure(i); 
-  } 
-  return arr; 
-};
-
-var printers = createPrinters(); 
-
-printers.map(printer => { 
-              console.log(printer()); 
-            })
-```
-
-This final example demonstrates how a closure can be used for data privacy.  In this case, our hero's profession can only be revealed by asking him directly (with a password!), unlike his appearance, which can be seen just by looking at him:
-
-```javascript
-const animal = {
-  animalType: 'animal',
- 
-  describe () {
-    return 'An ' + this.animalType + ' with ' + this.furColor + 
-      ' fur, ' + this.legs + ' legs, and a ' + this.tail + ' tail.';
-  }
-};
- 
-const mouse = () => {
-  const secret = 'spy';
-
-  const testPassword = (password) => {
-    const privateKey = -2133058532;
-
-    let hash = 0; 
-    if (password.length === 0) return hash; 
-    for (i = 0; i < password.length; i++) { 
-      char = password.charCodeAt(i); 
-      hash = ((hash << 5) - hash) + char; 
-      hash = hash & hash; 
-    } 
-    return hash === privateKey; 
-  };
-
-  return Object.assign(
-    Object.create(animal), 
-    {
-      animalType: 'mouse',
-      furColor: 'brown',
-      legs: 4,
-      tail: 'long, skinny',
-      profession: (password) => {
-        return testPassword(password) ? 
-                  secret : "secret";
-      }
-    }
-  );
-};
- 
-const peek = (animal) => {
-  console.log("Peek:");
-  console.log(animal);
-};
-const ask = (animal, password) => {
-  console.log("Ask:");
-  console.log(animal.profession(password));
-};
-
-const james = mouse();
-
-peek(james);
-ask(james, "skyfall");
-```
 </div>
 </div>
 
