@@ -5,15 +5,6 @@
 
 ## Javascript
 
-<button type="button" id="toggle-all" value="none">Expand All Sections</button>
-
-&nbsp;
-
--------------------------------------------------------------------------------------------------------
-<div id="paradigmns">
-<button type="button" class="collapsible">+ Javascript Paradigms</button>   
-<div class="content" style="display: none;" markdown="1">
-
 Javascript is what is termed a multi-paradigm language, which means that it supports multiple different approaches to programming.  In particular it supports:
 
    * Prototypal Inheritance
@@ -23,7 +14,14 @@ Javascript is what is termed a multi-paradigm language, which means that it supp
 
 -------------------------------------------------------------------------------------------------------
 
-**Prototypal Inheritance**
+<button type="button" id="toggle-all" value="none">Expand All Sections</button>
+
+&nbsp;
+
+-------------------------------------------------------------------------------------------------------
+<div id="pi">
+<button type="button" class="collapsible">+ Prototypal Inheritance</button>   
+<div class="content" style="display: none;" markdown="1">
 
 * Objects without classes.
    * Each object instance has a prototype: Object.prototype, which is itself an object instance.
@@ -35,6 +33,10 @@ Javascript is what is termed a multi-paradigm language, which means that it supp
    * Can pick and choose which properties to inherit (and dynamically change this over time).
 * Function inheritance
    * Using a function to create a closure.
+
+&nbsp;
+
+-------------------------------------------------------------------------------------------------------
 
 Note that prototypal inheritance is **not the same as classical inheritance**.  
    * In classical inheritance, classes are provided with a blueprint that is built from a hierarchical chain of sub-classes.  An instantiated class will be a single object with all of the properties of the sub-classes.
@@ -59,6 +61,10 @@ Note that prototypal inheritance is **not the same as classical inheritance**.
 Javascript does not support (true) classical inheritance.
 
 *It is difficult to identify any case where classical inheritance is more appropriate than prototypal inheritance!  The only case appears to be "if the language you are using depends on classical inheritance".*
+
+&nbsp;
+
+-------------------------------------------------------------------------------------------------------
 
 A more in-depth discussion regarding descriptions of prototypal inheritance, can be found [here](https://alexsexton.com/blog/2013/04/understanding-javascript-inheritance/).  The following is extracted from that article:
 
@@ -99,18 +105,28 @@ myWiderOptions = Object.assign(
 // let myWiderOptions = Object.create(myOptions);
 // myOptions.three = 3;
 ```
+</div>
+</div>
+
+<div id="fp">
+<button type="button" class="collapsible">+ Functional Programming</button>   
+<div class="content" style="display: none;" markdown="1">
+
+At it's core, functional programming is based on the four main principles:
+
+   * Functional Composition
+   * Avoiding Shared State
+   * Avoiding Mutable Data
+   * Avoiding Side-Effects
 
 &nbsp;
 
 -------------------------------------------------------------------------------------------------------
 
-**Functional Programming**
+**Functional Composition**
 
-At it's core, functional programming is based on the three main principles:
-
-* Functional Composition
-   * Function composition is the process of combining two or more functions in order to produce a new function, e.g. `f(g(x))`.
-   * There are two approaches to composition: compose and pipe.
+* Function composition is the process of combining two or more functions in order to produce a new function, e.g. `f(g(x))`.
+* There are two approaches to composition: compose and pipe.
 
 *compose*
 
@@ -153,16 +169,52 @@ pipe(
 // = [F DERF]
 ```
 
-* Avoiding Shared State
-  * A function should not have any internal state and it should certainly not share that state with other functions.
-  * A function should only be aware of the data passed into it as input.
-  * The problem with shared state is that in order to understand the effects of a function, it is necessary to know the entire history of every shared variable that the function uses or affects.
-  * If state is shared, race-conditions can result, where functions compete to access resources.  This can mean that the order in which function calls can result is different output.
+&nbsp;
 
-* Avoiding Mutable Data
-   * Mutable data is any data that can changed after it was created.
-   * An immutable value or object cannot be changed, so every update creates new value, leaving the old one untouched.
-   
+-------------------------------------------------------------------------------------------------------
+
+**Avoiding Shared State**
+
+* A function should not have any internal state and it should certainly not share that state with other functions.
+* A function should only be aware of the data passed into it as input.
+* The problem with shared state is that in order to understand the effects of a function, it is necessary to know the entire history of every shared variable that the function uses or affects.
+* If state is shared, race-conditions can result, where functions compete to access resources.  This can mean that the order in which function calls can result is different output.
+
+&nbsp;
+
+-------------------------------------------------------------------------------------------------------
+
+**Avoiding Mutable Data**
+
+* Mutable data is any data that can changed after it was created.
+* An immutable value or object cannot be changed, so every update creates new value, leaving the old one untouched.
+
+
+&nbsp;
+
+-------------------------------------------------------------------------------------------------------
+
+**Avoiding Side-Effects**
+
+In functional programming, a side effect is any application state change that is observable outside the called function other than its return value.
+
+Examples include:
+   * Modifying any external variable or object property (e.g., a global variable, or a variable in the parent function scope chain).
+   * Logging to the console.
+   * Writing to the screen.
+   * Writing to a file.
+   * Writing to the network.
+   * Triggering any external process.
+   * Calling any other functions with side-effects.
+
+The goal in functional programming is to minimize side-effects; in the ideal case, the only result of calling a function should be the return value.
+
+If side-effects cannot be avoided, best practice is to isolate them from the rest of the software.  To draw a comparision with OO programming, this is similar to the Model-View-Controller (MVC) pattern, where the View is the side-effects, the Controller the functional logic, and the Model the state.  These "components" should be kept separate and loosely coupled.
+
+&nbsp;
+
+-------------------------------------------------------------------------------------------------------
+
 The ideal form of a function is the pure function, a function for which the same inputs always result in the same output, and there are no side-effects (i.e. no outside effects other than the return value).
 
 Functional programming is supported by features such a:
@@ -220,43 +272,6 @@ In an ideal world, an application would be composed entirely of pure functions. 
 
 Currying???  https://blog.bitsrc.io/understanding-currying-in-javascript-ceb2188c339
 
-</div>
-</div>
-
-<div id="sharedstate">
-<button type="button" class="collapsible">+ Avoiding Shared State</button>   
-<div class="content" style="display: none;" markdown="1">
-
-
-</div>
-</div>
-
-<div id="mutatedstate">
-<button type="button" class="collapsible">+ Avoiding Mutated State</button>   
-<div class="content" style="display: none;" markdown="1">
-
-
-</div>
-</div>
-
-<div id="sideffect">
-<button type="button" class="collapsible">+ Avoiding Side-Effects</button>   
-<div class="content" style="display: none;" markdown="1">
-
-In functional programming, a side effect is any application state change that is observable outside the called function other than its return value.
-
-Examples include:
-   * Modifying any external variable or object property (e.g., a global variable, or a variable in the parent function scope chain).
-   * Logging to the console.
-   * Writing to the screen.
-   * Writing to a file.
-   * Writing to the network.
-   * Triggering any external process.
-   * Calling any other functions with side-effects.
-
-The goal in functional programming is to minimize side-effects; in the ideal case, the only result of calling a function should be the return value.
-
-If side-effects cannot be avoided, best practice is to isolate them from the rest of the software.  To draw a comparision with OO programming, this is similar to the Model-View-Controller (MVC) pattern, where the View is the side-effects, the Controller the functional logic, and the Model the state.  These "components" should be kept separate and loosely coupled.
 </div>
 </div>
 
