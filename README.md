@@ -17,7 +17,7 @@
 
 <button type="button" id="toggle-all" value="none">Expand All Sections</button>
 
-## Javascript Paradigms
+## Paradigms
 
 Javascript is what is termed a multi-paradigm language, which means that it supports multiple different approaches to programming.  In particular it supports:
 
@@ -411,9 +411,15 @@ ask(james, "skyfall");
 <button type="button" class="collapsible">+ Currying</button>   
 <div class="content" style="display: none;" markdown="1">
 
+* What is currying?
 
+* How does currying work?
 
-Currying???  https://blog.bitsrc.io/understanding-currying-in-javascript-ceb2188c339
+* Why is currying useful?
+
+* https://blog.bitsrc.io/understanding-currying-in-javascript-ceb2188c339
+* https://blog.bitsrc.io/understanding-currying-in-javascript-ceb2188c339
+* https://bjouhier.wordpress.com/2011/04/04/currying-the-callback-or-the-essence-of-futures/
 
 </div>
 </div>
@@ -434,8 +440,231 @@ Currying???  https://blog.bitsrc.io/understanding-currying-in-javascript-ceb2188
 </div>
 </div>
 
+<div id="oneway">
+<button type="button" class="collapsible">+ One-Way Data Flow</button>   
+<div class="content" style="display: none;" markdown="1">
 
-### Javascript Basics
+* One-way data flow means that the model is the single source of truth.  
+* The UI can signal changes to the model but only the model can change the app's state.
+* This effectively means that the application follows the Data Down, Action Up pattern, which makes it easier to understand.
+
+This is more typically used in front-end frameworks, such as React, however the following is an example using vanilla javascript:
+
+**Vanilla JS Example**
+
+*oneway.html*
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+    <main class="main">
+      <div class="quote" data-binding="quote"></div>
+      <div class="author" data-binding="author"></div>
+    </main>
+
+    <script src="./oneway.js"></script>
+</body>
+</html>
+```
+
+*oneway.css*
+
+```css
+body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  font-family: "Helvetica neue", Helvetica, sans-serif;
+  justify-content: center;
+}
+
+.main {
+  width: 60%;
+  align-self: center;
+}
+
+.quote {
+  font-style: italic;
+}
+
+.author {
+  font-weight: 600;
+  text-align: right;
+}
+```
+
+*oneway.js*
+
+```javascript
+import './oneway.css';
+
+const quotes = [
+  {
+    author: 'Albert Einstein',
+    quote: 'Strive not to be a success, but rather to be of value.'
+  },
+  {
+    author: 'Robert Frost',
+    quote: 'Two roads diverged in a wood, and I—I took the one less traveled by, And that has made all the difference.'
+  }
+];
+
+// Proxy allows state setter to be overridden
+const createState = (state) => {
+  return new Proxy(state, {
+    set: (state, property, value) => {
+      state[property] = value;
+      render();
+      return true;
+    }
+  });
+};
+
+const state = createState(quotes[0]);
+
+const render = () => {
+  const bindings = Array.from(document.querySelectorAll('[data-binding]')).map(
+    e => e.dataset.binding
+  );
+  bindings.forEach(binding => {
+    if (state[binding]) {
+      document.querySelector(`[data-binding='${binding}']`).innerHTML = state[binding];
+    } else {
+      throw new ReferenceError(`${binding} is a not a member of the current state`);
+    }
+  });
+};
+
+render();
+
+setInterval(() => {
+  const index = Math.floor(Math.random() * Math.floor(quotes.length));
+  const { author, quote } = quotes[index];
+  Object.assign(state, {
+    author: author,
+    quote: quote
+  });
+}, 2000);
+```
+
+**React Example**
+
+*App.js*
+
+```jsx
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import './oneway.css';
+import Quote from './Quote'
+
+class App extends Component {
+  state = {
+    author: '',
+    quote: '',
+  };
+
+  quoteChangeHandler = (newAuthor, newQuote) => {
+    this.setState({ author: newAuthor, quote: newQuote });
+  };
+
+  render() {
+
+    let quote = (<Quote 
+                  onChange={this.quoteChangeHandler} 
+                  quote={this.state.quote} 
+                  author={this.state.author} />);
+
+    return (
+      <div className="App"> {/* required */} 
+        {quote}
+      </div>
+    );
+  }
+}
+
+export default App;
+```
+
+*Quote.js*
+
+```jsx
+import React, { useEffect } from 'react';
+
+const Quote = (props) => {
+
+  const quotes = [
+    {
+      author: 'Albert Einstein',
+      quote: 'Strive not to be a success, 
+              but rather to be of value.'
+    },
+    {
+      author: 'Robert Frost',
+      quote: 'Two roads diverged in a wood, 
+               and I—I took the one less 
+               traveled by, And that has 
+               made all the difference.'
+    }
+  ];
+  
+  function updateQuote(){
+    const index = Math.floor(Math.random() * Math.floor(quotes.length));
+    const { author, quote } = quotes[index];
+    props.onChange(author, quote)
+  }
+
+  useEffect(() => {
+    // fake user interaction
+    const timer = setTimeout(() => {
+      updateQuote();
+    }, 2000);
+
+    return () => {
+      clearTimeout(timer); // javascript built-in function
+    };
+  });
+
+  return (
+    <div class="main">
+      <div class="quote">{props.quote}</div>
+      <div class="author">{props.author}</div>
+    </div>
+  );
+}
+
+export default Quote;
+```
+
+**Two-Way Data Binding**
+
+</div>
+</div>
+
+<div id="promise">
+<button type="button" class="collapsible">+ Monolithic vs Microservice Architectures</button>   
+<div class="content" style="display: none;" markdown="1">
+
+
+</div>
+</div>
+
+
+<div id="promise">
+<button type="button" class="collapsible">+ Asynchronous Programming</button>   
+<div class="content" style="display: none;" markdown="1">
+
+
+</div>
+</div>
+
+### Basics
 
 <div id="createobj">
 <button type="button" class="collapsible">+ Creating An Object</button>   
