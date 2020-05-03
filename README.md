@@ -5,12 +5,6 @@
 
 ## Javascript
 
-Javascript is what is termed a multi-paradigm language, which means that it supports multiple different approaches to programming.  In particular it supports:
-
-   * Prototypal Inheritance
-   * Functional Programming
-
-
 * What are two-way data binding and one-way data flow, and how are they different?
 * What are the pros and cons of monolithic vs microservice architectures?
 * What is asynchronous programming, and why is it important in JavaScript?
@@ -23,9 +17,13 @@ Javascript is what is termed a multi-paradigm language, which means that it supp
 
 <button type="button" id="toggle-all" value="none">Expand All Sections</button>
 
-&nbsp;
+## Javascript Paradigms
 
--------------------------------------------------------------------------------------------------------
+Javascript is what is termed a multi-paradigm language, which means that it supports multiple different approaches to programming.  In particular it supports:
+
+   * Prototypal Inheritance
+   * Functional Programming
+
 <div id="pi">
 <button type="button" class="collapsible">+ Prototypal Inheritance</button>   
 <div class="content" style="display: none;" markdown="1">
