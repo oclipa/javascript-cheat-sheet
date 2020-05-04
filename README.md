@@ -733,7 +733,7 @@ A promise has 3 states:
 
 Callbacks are attached to promise to handle the returned value.  Once returned, a promise is considered "settled" and cannot be reused (it is immutable).
 
-A promise will immediately start doing a task.  If there is less hurry, alternatives are observables and tasks.
+A promise will immediately start doing a task.  If there is less hurry, alternatives are Observables (which allow composition of tasks - see RxJS) and Tasks (which are similar to promises but concern computations rather than results - can start/cancel/stop the computation).
 
 ```
 const wait = time => new Promise((resolve) => setTimeout(resolve, time));
