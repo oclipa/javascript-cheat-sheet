@@ -5,8 +5,6 @@
 
 ## Javascript
 
--------------------------------------------------------------------------------------------------------
-
 <button type="button" id="toggle-all" value="none">Expand All Sections</button>
 
 -------------------------------------------------------------------------------------------------------
@@ -401,7 +399,7 @@ ask(james, "skyfall");
 </div>
 </div>
 
-<div id="funccomp">
+<div id="curry">
 <button type="button" class="collapsible">+ Currying</button>   
 <div class="content" style="display: none;" markdown="1">
 
@@ -422,14 +420,7 @@ ask(james, "skyfall");
 <button type="button" class="collapsible">+ Higher Order Functions</button>   
 <div class="content" style="display: none;" markdown="1">
 
-
-</div>
-</div>
-
-<div id="promise">
-<button type="button" class="collapsible">+ Promises</button>   
-<div class="content" style="display: none;" markdown="1">
-
+A way of composing functions.  A Higher Order Function accepts one or more functions are arguments and returns another function.
 
 </div>
 </div>
@@ -438,11 +429,26 @@ ask(james, "skyfall");
 <button type="button" class="collapsible">+ One-Way Data Flow</button>   
 <div class="content" style="display: none;" markdown="1">
 
-* One-way data flow means that the model is the single source of truth.  
+* One-way data flow means that the model is the single source of truth.
 * The UI can signal changes to the model but only the model can change the app's state.
+* Data is input from the UI and then passed back to the model to be manipulated.  The results are then passed down the component tree to be redisplayed.
 * This effectively means that the application follows the Data Down, Action Up pattern, which makes it easier to understand.
 
-This is more typically used in front-end frameworks, such as React, however the following is an example using vanilla javascript:
+user notifies intention to update
+=====> intention sent "up" to model 
+==========> model decides what to do with intention
+<========== model updates based on intention
+<===== updated properties sent "down" to components
+updated properties displayed to user
+
+Pros:
+   * Simple data flow (which makes debugging easier)
+   * Scales well.
+
+Cons:
+   * Can require more code.
+
+This is typically used in front-end frameworks, such as React, however the following is an example using vanilla javascript:
 
 **Vanilla JS Example**
 
@@ -510,11 +516,29 @@ const quotes = [
   }
 ];
 
-// Proxy allows state setter to be overridden
+// timer mimics user interaction
+setInterval(() => {
+
+  // 1) at intervals, a random quote is "selected by the user"
+  const index = Math.floor(Math.random() * Math.floor(quotes.length));
+  const { author, quote } = quotes[index];
+  
+  // 2) selected quote is "sent to model"
+  Object.assign(state, {
+    author: author,
+    quote: quote
+  });
+}, 2000);
+
+// Proxy mimics model
 const createState = (state) => {
   return new Proxy(state, {
     set: (state, property, value) => {
+    
+      // 3) state is updated
       state[property] = value;
+      
+      // 4) updated state is "sent to UI"
       render();
       return true;
     }
@@ -537,15 +561,6 @@ const render = () => {
 };
 
 render();
-
-setInterval(() => {
-  const index = Math.floor(Math.random() * Math.floor(quotes.length));
-  const { author, quote } = quotes[index];
-  Object.assign(state, {
-    author: author,
-    quote: quote
-  });
-}, 2000);
 ```
 
 **React Example**
@@ -636,27 +651,104 @@ const Quote = (props) => {
 export default Quote;
 ```
 
-**Two-Way Data Binding**
 
 </div>
 </div>
 
-<div id="promise">
+<div id="twoway">
+<button type="button" class="collapsible">+ Two-Way Data Binding</button>   
+<div class="content" style="display: none;" markdown="1">
+
+Two-way binding just means that:
+1. When properties in the model get updated, the updates get *immediately propagated* to the view.
+1. When UI elements get updated, the changes get *immediately propagated* to the model.
+
+user 1 interacts with view 1
+<=====> model 1 reflects interaction
+<==========> model 1 updates model 2
+view 1 updates to reflect model 1 and model 2
+view 2 updates to reflect model 1 and model 2
+
+Pros:
+   * View will always reflect model (and vice versa).
+   * Makes model a safe, atomic data source for whole application.
+
+Cons:
+   * Can be difficult to debug.
+
+</div>
+</div>
+
+<div id="mono">
 <button type="button" class="collapsible">+ Monolithic vs Microservice Architectures</button>   
 <div class="content" style="display: none;" markdown="1">
 
-What are the pros and cons of monolithic vs microservice architectures?
+A monolithic application is one written as one unit of code, with components designed to work together, sharing the same memory and resources.
+
+Pros:
+  * Easier to implement features that have cross-cutting concerns (e.g. logging, security features, etc.).
+  * Can have performance advantages due to shared-memory access.
+
+Cons:
+  * Componenents tend to be tightly coupled, which makes maintence and scaling difficult.
+  * Can be much harder to understand dependencies and data flow.
+
+A microservice consists of many smaller, independent applications, each of which has its own memory and resources.
+
+Pros:
+   * Tend to be better organized, with clearer separation of concerns.
+   * Much easier to scale and reconfigure.
+   * Easier to isolate performance bottlenecks so they are easier to handle.
+
+Cons:
+   * Can be difficult to separate or encapsulate cross-cutting concerns.
+   * Tend to require management of a many virtual machines or containers.
 
 </div>
 </div>
 
-
-<div id="promise">
+<div id="async">
 <button type="button" class="collapsible">+ Asynchronous Programming</button>   
 <div class="content" style="display: none;" markdown="1">
 
-What is asynchronous programming, and why is it important in JavaScript?
+Synchronous programming means that code is executed sequentially and will block on longer running tasks.
 
+Asynchronous programming means that the engine runs in an event loop, from which operations are spawned.  If an operation takes a long time, the loop continues running until a result is received.  Typically this is handled through events.
+
+Asynchronous programming is much better suited to UIs, or applications that depend on network interaction.  This is particularly relevant for web applications, which is why it is important for Javascript.
+
+</div>
+</div>
+
+<div id="promise">
+<button type="button" class="collapsible">+ Promises</button>   
+<div class="content" style="display: none;" markdown="1">
+
+A promise is an object that may produce a single value at some time in the future.  This could be a resolved value, or a reason why it was not resolved.
+
+A promise has 3 states:
+   * Fulfilled: `onFulfilled()` will be called (e.g., `resolve()` was called)
+   * Rejected: `onRejected()` will be called (e.g., `reject()` was called)
+   * Pending: not yet fulfilled or rejected
+
+Callbacks are attached to promise to handle the returned value.  Once returned, a promise is considered "settled" and cannot be reused (it is immutable).
+
+A promise will immediately start doing a task.  If there is less hurry, alternatives are observables and tasks.
+
+```
+const wait = time => new Promise((resolve) => setTimeout(resolve, time));
+
+wait(3000).then(() => console.log('Hello!')); // 'Hello!'
+```
+
+All promises supply a `.then()` method, which returns a new promise:
+
+```
+promise.then(
+  onFulfilled?: Function,
+  onRejected?: Function
+) => Promise
+```
 </div>
 </div>
 
