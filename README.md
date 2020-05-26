@@ -1383,7 +1383,7 @@ In summary:
    * `.parseFloat()` 
       * Takes a String as an argument.
       * Returns the Float point number equivalent.
-   * `Math.floor()
+   * `Math.floor()`
       * Used to round an integer or floating point number.
       * Returns the nearest integer rounded down.
    * `Math.ceil() `
