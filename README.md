@@ -1370,6 +1370,36 @@ console.log(months);
 </div>
 </div>
 
+<div id="convert">
+<button type="button" class="collapsible">+ Converting a String to a Number</button>   
+<div class="content" style="display: none;" markdown="1">
+
+Further information: [https://stackabuse.com/javascript-convert-string-to-number/](https://stackabuse.com/javascript-convert-string-to-number/)
+
+In summary:
+   * `.parseInt()` 
+      * Takes a String as a first argument, and a base to which that String will be converted to. 
+      * This method always returns an integer.
+   * `.parseFloat()` 
+      * Takes a String as an argument.
+      * Returns the Float point number equivalent.
+   * `Math.floor()
+      * Used to round an integer or floating point number.
+      * Returns the nearest integer rounded down.
+   * `Math.ceil() `
+      * Used to round an integer or floating point number.
+      * Returns the nearest integer rounded up.
+   * `Unary Operator` 
+      * By adding a `+` sign before a String, it will be converted into a number if it follows the right format.
+      * e.g. `let myStr = '100.21'; +myStr; // 100.21`
+      * This has good performance but lacks readability.
+   * `Multiply by 1` 
+      * If a String is multiplied by the primitive number 1, the string will become a number.
+      * e.g. `let myStr = '100.21'; myStr * 1; // 100.21`
+      * This also has good performance, and is slightly more readable (although the intention may not be clear).
+</div>
+</div>
+
 <div id="semi">
 <button type="button" class="collapsible">+ Semi-Colons!</button>   
 <div class="content" style="display: none;" markdown="1">
