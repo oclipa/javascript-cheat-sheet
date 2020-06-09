@@ -1199,9 +1199,57 @@ console.log(map1);
 
 -------------------------------------------------------------------------------------------------------
 
+**[`pop()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/pop)** 
+
+* The pop() method removes the last element from an array and returns that element. 
+* **This method mutates the array.**
+* Syntax: `const element = array.pop()`
+
+```javascript
+const plants = ['broccoli', 'cauliflower', 'cabbage', 'kale', 'tomato'];
+
+console.log(plants.pop());
+// expected output: "tomato"
+
+console.log(plants);
+// expected output: Array ["broccoli", "cauliflower", "cabbage", "kale"]
+
+plants.pop();
+
+console.log(plants);
+// expected output: Array ["broccoli", "cauliflower", "cabbage"]
+```
+
+&nbsp;
+
+-------------------------------------------------------------------------------------------------------
+
+**[`push()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push)** 
+
+* The push() method adds one or more elements to the end of an array and returns the new length of the array.
+* **This method mutates the array.**
+* Syntax: `const len = array.push(element1[, ...[, elementN]])`
+
+```javascript
+const animals = ['pigs', 'goats', 'sheep'];
+
+const count = animals.push('cows');
+console.log(count);
+// expected output: 4
+console.log(animals);
+// expected output: Array ["pigs", "goats", "sheep", "cows"]
+
+animals.push('chickens', 'cats', 'dogs');
+console.log(animals);
+// expected output: Array ["pigs", "goats", "sheep", "cows", "chickens", "cats", "dogs"]
+```
+
+-------------------------------------------------------------------------------------------------------
+
 **[`find()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find)** 
 
 * Returns the **first** element in an array that matches the testing function. 
+* This method does not mutate the array.
 
 ```javascript
 const array1 = [5, 12, 8, 130, 44];
@@ -1220,6 +1268,7 @@ console.log(res);
 **[`findIndex()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex)**
 
 * Returns the index of the **first** element in an array that matches the testing function. 
+* This method does not mutate the array.
 
 ```javascript
 const array1 = [5, 12, 8, 130, 44];
@@ -1238,6 +1287,7 @@ console.log(array1.findIndex(isLarge));
 **[`filter()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter)** 
 
 * Returns a new array that only contains elements of the input array that match the testing function. 
+* This method does not mutate the array.
 
 ```javascript
 const words = ['spray', 'limit', 'elite', 
@@ -1259,6 +1309,7 @@ console.log(res);
 **[`reduce()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce)** 
 
 * Applies a [reducer](https://www.robinwieruch.de/javascript-reducer) function to each element of an array, resulting in a single output value.
+* This method does not mutate the array.
 
 ```javascript
 const array1 = [1, 2, 3, 4];
@@ -1274,11 +1325,14 @@ console.log(array1.reduce(reducer, 5));
 // expected output: 15
 ```
 
+&nbsp;
+
 -------------------------------------------------------------------------------------------------------
 
 **[`concat()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat)** 
 
 * Returns a new array that is a concatenation of two or more arrays (using a shallow copy).
+* This method does not mutate the array.
 * Syntax 1: `array1.concat[array2, array3, ...arrayN]`
 
 ```javascript
@@ -1309,6 +1363,7 @@ console.log(result);
 **[`slice()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice)** 
 
 * Returns a new array containing a shallow copy of the selected elements of an array.
+* This method does not mutate the array.
 * Syntax: `slice[inclusive begin, exclusive end]`
 
 ```javascript
@@ -1335,7 +1390,8 @@ console.log(animals.slice(1, 5));
 
 **[`splice()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice)** 
 
-* Changes the contents of an array by removing or replacing existing elements and/or adding new elements [in place](https://en.wikipedia.org/wiki/In-place_algorithm) (i.e. it does not create a new array).
+* Changes the contents of an array by removing or replacing existing elements and/or adding new elements [in place](https://en.wikipedia.org/wiki/In-place_algorithm).
+* **This method mutates the array.**
 * Syntax: `let arrDeletedItems = array.splice(start[, deleteCount[, item1[, item2[, ...]]]])`
 
 ```javascript
