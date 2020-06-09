@@ -1181,6 +1181,10 @@ function Greeting({name, ...restProps}) {
 <button type="button" class="collapsible">+ Array Functions (map() etc.)</button>   
 <div class="content" style="display: none;" markdown="1">
 
+A discussion of the mutating vs non-mutating array functions can be found here:
+   * [https://lorenstewart.me/2017/01/22/javascript-array-methods-mutating-vs-non-mutating/](https://lorenstewart.me/2017/01/22/javascript-array-methods-mutating-vs-non-mutating/)
+
+
 **[`map()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)**
 
 * Applies a function to each element in an array and returns a new array with the result.
