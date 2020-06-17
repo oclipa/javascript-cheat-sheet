@@ -1430,7 +1430,18 @@ console.log(months);
 </div>
 </div>
 
-<div id="convert">
+<div id="convertStringToProp">
+<button type="button" class="collapsible">+ Converting a String to a Property Name</button>   
+<div class="content" style="display: none;" markdown="1">
+
+Also known as "square bracket" notation:
+
+* https://stackoverflow.com/questions/4968406/javascript-property-access-dot-notation-vs-brackets
+  
+</div>
+</div>
+
+<div id="convertStringTONum">
 <button type="button" class="collapsible">+ Converting a String to a Number</button>   
 <div class="content" style="display: none;" markdown="1">
 
