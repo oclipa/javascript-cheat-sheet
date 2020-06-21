@@ -754,6 +754,65 @@ promise.then(
 
 ### Basics
 
+<div id="simple-web-app">
+<button type="button" class="collapsible">+ A Simple Web App</button>   
+<div class="content" style="display: none;" markdown="1">
+
+*index.js*
+
+```html
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>My Awesome Page</title>
+    
+    <!-- 
+      "defer" allows faster page loads, 
+      but may not work in older browsers 
+    -->
+    <script defer src="src/index.js" charset="utfs-8"></script>
+  </head>
+  <body>
+    <div id="quotes"></div>
+    <button id="give-cat">GIVE ME A CAT!</button>
+    <div id="cat-pic"></div>
+  </body>
+</html>
+```
+
+*index.js*
+
+```javascript
+let quotesDiv = document.getElementById('quotes');
+
+fetch('https://api.kanye.rest')
+  .then((res) => res.json())
+  .then((quote) => {
+    // tick marks indicate a template literal, which
+    // allows a string to contain placeholders
+    quotesDiv.innerHTML += `<p>${quote.quote}</p>`;
+  });
+
+let catButton = document.getElementById('give-cat');
+
+catButton.addEventListener('click', (evt) => {
+  let catDiv = document.getElementById('cat-pic');
+
+  fetch('https://api.thecatapi.com/v1/images/search?')
+    .then((res) => res.json())
+    .then((cats) => {
+      cats.forEach((cat) => {
+        catDiv.innerHTML = `<h3>Here is your cat</h3>
+            <img src="${cat.url}" alt="kitty" />`;
+      });
+    });
+});
+```
+
+</div>
+</div>
+
 <div id="createobj">
 <button type="button" class="collapsible">+ Creating An Object</button>   
 <div class="content" style="display: none;" markdown="1">
