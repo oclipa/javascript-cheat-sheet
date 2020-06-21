@@ -420,7 +420,33 @@ ask(james, "skyfall");
 <button type="button" class="collapsible">+ Higher Order Functions</button>   
 <div class="content" style="display: none;" markdown="1">
 
-A way of composing functions.  A Higher Order Function accepts one or more functions are arguments and returns another function.
+Higher Order Functions are fundamental to the way Javascript works.  Essentially they allow functions to be composed together, to return another function. 
+
+A Higher Order Function accepts one or more functions as arguments and returns another function.
+
+```javascript
+const strArray = ['JavaScript', 'Python', 'PHP', 'Java', 'C'];
+
+// this is a higher order function
+function mapForEach(arr, fn) {
+  const newArray = [];
+  for(let i = 0; i < arr.length; i++) {
+    newArray.push(
+      fn(arr[i])
+    );
+  }
+  return newArray;
+}
+
+// pass a function to mapForEach that returns
+// the number of characters in an item
+const lenArray = mapForEach(strArray, function(item) {
+  return item.length;
+});
+
+// prints [ 10, 6, 3, 4, 1 ]
+console.log(lenArray);
+```
 
 </div>
 </div>
