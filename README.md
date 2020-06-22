@@ -850,8 +850,8 @@ catButton.addEventListener('click', (evt) => {
 There are several approaches to creating objects in Javascript.
 
    * Using an Object Literal.
-   * Using a Factory Function.
    * Using Object.create().
+   * Using a Factory Function.
    * Using Prototypal Inheritance.
    * Using Classes.
 
@@ -897,7 +897,9 @@ In this case, a new object is created from a base object (using `Object.create()
 ```javascript
 let baseX = { p1: a, p2: b, myMethod() { return `base method` } }
 
-let concreteSubX = Object.assign(Object.create(baseX), { p1: c, p3: d });
+let concreteSubX = return Object.assign(
+    Object.create(baseX), { p1: c, p3: d }
+);
 ```
 e.g.:
 ```javascript
@@ -935,7 +937,9 @@ A slight refinement upon using `Object.create()` directly is to wrap it in a fac
 let baseX = { p1: a, p2: b, myMethod() { return `base method`; } }
 
 let subX = function subX () {
-  return Object.assign(Object.create(baseX), { p1: c, p3: d });
+  return Object.assign(
+    Object.create(baseX), { p1: c, p3: d }
+  );
 };
 
 let concreteSubX = subX();
@@ -1014,7 +1018,10 @@ function Rodent(rodentType, furColor, legs, tail) {
 
 // add describe function
 Rodent.prototype.describe = function() {
-  return ('A ' + this.rodentType +', with ' + this.furColor +' fur, ' + this.legs +' legs, and a ' + this.tail +' tail.');
+  return ('A ' + this.rodentType +', with ' + 
+            this.furColor + ' fur, ' + 
+            this.legs +' legs, and a ' + 
+            this.tail +' tail.');
 };
 
 // constructor function
@@ -1029,13 +1036,17 @@ Mouse.prototype.constructor = Mouse;
 
 // override describe function
 Mouse.prototype.describe = function() {
-  return ('A ' + this.rodentType +', with ' + this.furColor +' fur, ' + this.legs +' legs, and a ' + this.tail +' tail. It likes ' + this.food +'.');
+  return ('A ' + this.rodentType +', with ' + 
+            this.furColor + ' fur, ' + 
+            this.legs +' legs, and a ' + 
+            this.tail +' tail. It likes ' + 
+            this.food +'.'');
 }
 
 const rodent = new Rodent('vole', 'grey', 4, 'short, stubby');
 console.log(rodent.describe());
 
-const mouse = new Mouse('mouse', 'brown', 4, 'long, skinny', 'cheese');
+const mouse = new Mouse('mouse', 'red', 4, 'pink', 'cheese');
 console.log(mouse.describe());
 ```
 
@@ -1081,7 +1092,10 @@ class Rodent {
   }
   
   describe() {
-    return ('A ' + this.rodentType +', with ' + this.furColor +' fur, ' + this.legs +' legs, and a ' + this.tail +' tail.');
+    return ('A ' + this.rodentType +', with ' + 
+              this.furColor + ' fur, ' + 
+              this.legs +' legs, and a ' + 
+              this.tail +' tail.');
   }
 }
 
@@ -1092,7 +1106,11 @@ class Mouse extends Rodent {
   }
   
   describe() {
-    return ('A ' + this.rodentType +', with ' + this.furColor +' fur, ' + this.legs +' legs, and a ' + this.tail +' tail. It likes ' + this.food +'.');
+    return ('A ' + this.rodentType +', with ' + 
+          this.furColor + ' fur, ' + 
+          this.legs +' legs, and a ' + 
+          this.tail +' tail. It likes ' + 
+          this.food +'.'');
   }
 }
 
@@ -1100,7 +1118,7 @@ class Mouse extends Rodent {
 const rodent = new Rodent('vole', 'grey', 4, 'short, stubby');
 console.log(rodent.describe());
 
-const mouse = new Mouse('mouse', 'brown', 4, 'long, skinny', 'cheese');
+const mouse = new Mouse('mouse', 'red', 4, 'pink', 'cheese');
 console.log(mouse.describe());
 ```
 
@@ -1602,7 +1620,7 @@ console.log(months);
 Template literals (a.k.a template strings) use ticks marks to indicate that a string can contain placeholders, or is split over multiple lines.
 
 e.g.
-```
+```javascript
 `string text`
 
 `string text line 1
@@ -1612,11 +1630,11 @@ e.g.
 ```
 An additional use of template literals is to "tag" a templated string with a function that accepts the template strings and placeholders as arguments:
 
-```
+```javascript
 tag`string text ${expression} string text`
 ```
 e.g.:
-```
+```javascript
 function myTag(strings, ...placeHolders) {
   let str0 = strings[0]; // "the rain in "
   let str1 = strings[1]; // " falls mainly on the "
@@ -1629,9 +1647,9 @@ function myTag(strings, ...placeHolders) {
 
 let country = 'Italy';
 let location = 'Rome';
-let output = myTag`the rain in ${country} falls mainly on ${location}`;
+let text = myTag`the rain in ${country} falls mainly on ${location}`;
 
-console.log(output); // the rain in Italy falls mainly on Rome
+console.log(text); // the rain in Italy falls mainly on Rome
 ```
 Note that the template function does not need to return a string.
 
