@@ -819,7 +819,7 @@ promise.then(
 <button type="button" class="collapsible">+ Installing NodeJS</button>   
 <div class="content" style="display: none;" markdown="1">
   
-NodeJS provides many tools that aid javascript, not least of which is the npm package management tool.
+NodeJS provides many tools that aid javascript development, not least of which is the npm package management tool.
   
 To install NodeJS:
 * Either, download the installer from the NodeJS website: [https://nodejs.org](https://nodejs.org)
@@ -853,8 +853,9 @@ Once installed, a script can be run using `node filename.js`, e.g.:
 ```js
 // Simple Addition Function in Javascript 
 function add(a, b) { 
-return a+b 
-} 
+  return a+b 
+}
+
 console.log(add(4, 6)) 
 ```
 
@@ -919,7 +920,7 @@ Missed!
 ```
 
 There is much more that `yargs` enables; see the following for further information:
-   * (http://yargs.js.org/)[http://yargs.js.org/]
+   * [http://yargs.js.org/](http://yargs.js.org/)
 
 </div>
 </div>
@@ -935,7 +936,6 @@ To start the web server, run the following command in the same folder as your `i
 
 ```
 $ http-server
-/home/dev/jsdemo>http-server
 Starting up http-server, serving ./
 Available on:
   http://192.168.0.5:8080
