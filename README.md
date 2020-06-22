@@ -815,9 +815,138 @@ promise.then(
 
 ### Basics
 
+<div id="nodejs">
+<button type="button" class="collapsible">+ Installing NodeJS</button>   
+<div class="content" style="display: none;" markdown="1">
+  
+NodeJS provides many tools that aid javascript, not least of which is the npm package management tool.
+  
+To install NodeJS:
+* Either, download the installer from the NodeJS website: [https://nodejs.org](https://nodejs.org)
+* Or, if using MacOS, install using HomeBrew: `brew install node`
+* Or, if using Zsh on Unbuntu (if using Bash, just replace `zsh` with `bash` and `.zshrc` with `.bash_profile`):
+   1. `sudo apt-get update`
+   1. `sudo apt-get upgrade`
+   1. `sudo apt-get install build-essential`
+   1. `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | zsh`
+   1. Restart prompt (if there problems are reported with .bashrc, check the permissions on .bashrc)
+   1. `nvm install --lts`
+   1. `nvm use --lts`
+   1. `echo "nvm use --silent --lts" >> .zshrc`
+
+After installing NodeJS, it is recommended to also install the following packages from npm:
+
+* http-server: `npm install -g http-server`
+</div>
+</div>
+
+<div id="simple-web-app">
+<button type="button" class="collapsible">+ A Simple Command-Line App</button>   
+<div class="content" style="display: none;" markdown="1">
+  
+NodeJs must be installed in order to run javascript on the command line.
+
+Once installed, a script can be run using `node filename.js`, e.g.:
+
+*add.js*
+
+```js
+// Simple Addition Function in Javascript 
+function add(a, b) { 
+return a+b 
+} 
+console.log(add(4, 6)) 
+```
+
+Run command: 
+```
+$ node add.js
+10
+```
+
+**Command-Line Arguments**
+
+To read command-line arguments, access the `process.argv` property:
+
+*print-args.js*
+
+```js
+console.log(process.argv);
+```
+
+Run command:
+```
+$ node print-args.js one two three four five`
+[ 'node',
+  '/home/dev/jsdemo/argv.js',
+  'one',
+  'two',
+  'three',
+  'four',
+  'five' ]
+```
+Note that the output includes both the `node` command and the script path.
+
+**yargs**
+
+To simplify handling of command-line arguments, the `yargs` package can be installed using npm: 
+* `npm install yargs`
+
+A simple example of using `yargs` is the following:
+
+*battleships.js*
+
+```js
+import argv from 'yargs';
+
+if (argv.x === 3 && argv.y >= 2 && 5 <= argv.y) {
+  console.log('You hit my battleship!')
+} else {
+  console.log('Missed!')
+}
+```
+
+Run command: 
+```
+$ node battleships.js --x=3 --y=2
+You hit my battleship!
+
+$ node battleships.js --x 3 --y 3
+You hit my battleship!
+
+$ node battleships.js --x 3 --y=1
+Missed!
+```
+
+There is much more that `yargs` enables; see the following for further information:
+   * (http://yargs.js.org/)[http://yargs.js.org/]
+
+</div>
+</div>
+
 <div id="simple-web-app">
 <button type="button" class="collapsible">+ A Simple Web App</button>   
 <div class="content" style="display: none;" markdown="1">
+
+To start a simple web server for testing javascript web apps, install the `http-server` package from npm: 
+* http-server: `npm install -g http-server`
+
+To start the web server, run the following command in the same folder as your `index.html` file:
+
+```
+$ http-server
+/home/dev/jsdemo>http-server
+Starting up http-server, serving ./
+Available on:
+  http://192.168.0.5:8080
+  http://127.0.0.1:8080
+Hit CTRL-C to stop the server
+```
+
+The web app can then be viewed in any browser by visiting: 
+* `http://localhost:8080`
+
+**A Simple Web App**
 
 *index.html*
 
@@ -1106,11 +1235,11 @@ Mouse.prototype.constructor = Mouse;
 
 // override describe function
 Mouse.prototype.describe = function() {
-  return ('A ' + this.rodentType +', with ' + 
+  return ('A ' + this.rodentType + ', with ' + 
             this.furColor + ' fur, ' + 
             this.legs +' legs, and a ' + 
             this.tail +' tail. It likes ' + 
-            this.food +'.'');
+            this.food + '.');
 }
 
 const rodent = new Rodent('vole', 'grey', 4, 'short, stubby');
@@ -1176,11 +1305,11 @@ class Mouse extends Rodent {
   }
   
   describe() {
-    return ('A ' + this.rodentType +', with ' + 
+    return ('A ' + this.rodentType + ', with ' + 
           this.furColor + ' fur, ' + 
           this.legs +' legs, and a ' + 
           this.tail +' tail. It likes ' + 
-          this.food +'.'');
+          this.food + '.');
   }
 }
 
