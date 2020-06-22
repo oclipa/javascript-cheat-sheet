@@ -460,12 +460,14 @@ console.log(lenArray);
 * Data is input from the UI and then passed back to the model to be manipulated.  The results are then passed down the component tree to be redisplayed.
 * This effectively means that the application follows the Data Down, Action Up pattern, which makes it easier to understand.
 
+```
 user notifies intention to update
 =====> intention sent "up" to model 
 ==========> model decides what to do with intention
 <========== model updates based on intention
 <===== updated properties sent "down" to components
 updated properties displayed to user
+```
 
 Pros:
    * Simple data flow (which makes debugging easier)
@@ -689,11 +691,13 @@ Two-way binding just means that:
 1. When properties in the model get updated, the updates get *immediately propagated* to the view.
 1. When UI elements get updated, the changes get *immediately propagated* to the model.
 
+```
 user 1 interacts with view 1
 <=====> model 1 reflects interaction
 <==========> model 1 updates model 2
 view 1 updates to reflect model 1 and model 2
 view 2 updates to reflect model 1 and model 2
+```
 
 Pros:
    * View will always reflect model (and vice versa).
@@ -859,6 +863,12 @@ As a general rule of thumb, Prototypal Inheritance and Classes should be avoided
 
 *Using an Object literal*
 
+This is the basic way to create an object in javascript.
+
+```javascript
+let X = { p1: a, p2: b, myMethod () { return `my method`; } }
+```
+e.g.:
 ```javascript
 let mouse = {
   furColor: 'brown',
@@ -876,9 +886,61 @@ let mouse = {
 &nbsp;
 
 -------------------------------------------------------------------------------------------------------
+*Using Object.create()*
+
+In this case, a new object is created from a base object (using `Object.create()` and the properties of the new object are set (using `Object.assign()`).
+
+* `Object.create()` creates a new object, using an existing object as the prototype.
+* `Object.assign()` copies all enumerable own properties from one or more source objects to a target object
+   * An "own property" is one that is not inherited.
+
+```javascript
+let baseX = { p1: a, p2: b, myMethod() { return `base method` } }
+
+let concreteSubX = Object.assign(Object.create(baseX), { p1: c, p3: d });
+```
+e.g.:
+```javascript
+let animal = {
+  animalType: 'animal',
+  
+  describe () {
+    return `An ${this.animalType}, with 
+      ${this.furColor} fur, ${this.legs} 
+      legs, and a ${this.tail} tail.`;
+  }
+};
+
+// assign(target, source1, source2 ...)
+let mouse = Object.assign(
+  Object.create(animal), 
+  {
+    animalType: 'mouse',
+    furColor: 'brown',
+    legs: 4,
+    tail: 'long, skinny'
+  }
+);
+```
+
+&nbsp;
+
+-------------------------------------------------------------------------------------------------------
 
 *Using a Factory Function*
 
+A slight refinement upon using `Object.create()` directly is to wrap it in a factory function.  This allows the function to be called multiple times.
+
+```javascript
+let baseX = { p1: a, p2: b, myMethod() { return `base method`; } }
+
+let subX = function subX () {
+  return Object.assign(Object.create(baseX), { p1: c, p3: d });
+};
+
+let concreteSubX = subX();
+```
+e.g.:
 ```javascript
 let animal = {
   animalType: 'animal',
@@ -909,37 +971,39 @@ let mickey = mouse();
 
 -------------------------------------------------------------------------------------------------------
 
-*Using Object.create()*
-
-```javascript
-let animal = {
-  animalType: 'animal',
-  
-  describe () {
-    return `An ${this.animalType}, with 
-      ${this.furColor} fur, ${this.legs} 
-      legs, and a ${this.tail} tail.`;
-  }
-};
-
-// assign(target, source1, source2 ...)
-let mouse = Object.assign(
-  Object.create(animal), 
-  {
-    animalType: 'mouse',
-    furColor: 'brown',
-    legs: 4,
-    tail: 'long, skinny'
-  }
-);
-```
-
-&nbsp;
-
--------------------------------------------------------------------------------------------------------
-
 *Using Prototypal Inheritance*
 
+This is the core principle upon which inheritance in javascript is based.
+
+```javascript
+function BaseX(a, b) 
+{ 
+  p1: a, 
+  p2: b 
+}
+
+BaseX.prototype.myMethod = function() {
+  return ( "base method" );
+};
+
+function SubX(c, d, e) 
+{ 
+  BaseX.call(this, p1: c, p2: d); 
+  p3: e;
+}
+
+SubX.prototype = Object.create(BaseX.prototype);
+SubX.prototype.constructor = SubX;
+
+SubX.prototype.myMethod = function() {
+  return ( "overidden method" );
+};
+
+const baseX = new BaseX('a', 'b');
+
+const subX = new SubX('c', 'd', e);
+```
+e.g.:
 ```javascript
 function Rodent(rodentType, furColor, legs, tail) {
   this.rodentType = rodentType;
@@ -973,7 +1037,6 @@ console.log(rodent.describe());
 
 const mouse = new Mouse('mouse', 'brown', 4, 'long, skinny', 'cheese');
 console.log(mouse.describe());
-
 ```
 
 &nbsp;
@@ -985,16 +1048,40 @@ console.log(mouse.describe());
 Note that `class` is simply syntactical sugar on prototype inheritance, so this example and the preceeding one are essentially identical under-the-covers.  The `class` pattern in ES6 is not the same as classical inheritance.
 
 ```javascript
+class BaseX {
+  constructor(a, b) {
+    this.p1 = a;
+    this.p2 = b;
+  }
+  
+  myMethod() { return ( "base method" ); }
+}
+
+class SubX extends BaseX {
+  constructor(c, d, e) {
+    super(c, d);
+    this.p3 = e;
+  }
+  
+  myMethod() { return ( "overridden method" ); }
+}
+
+const baseX = new BaseX('a', 'b');
+
+const subX = new SubX('c', 'd', e);
+```
+e.g.:
+```javascript
 class Rodent {
   constructor(rodentType, furColor, legs, tail) {
-  this.rodentType = rodentType;
-  this.furColor = furColor;
-  this.legs = legs;
-  this.tail = tail;
+    this.rodentType = rodentType;
+    this.furColor = furColor;
+    this.legs = legs;
+    this.tail = tail;
   }
   
   describe() {
-      return ('A ' + this.rodentType +', with ' + this.furColor +' fur, ' + this.legs +' legs, and a ' + this.tail +' tail.');
+    return ('A ' + this.rodentType +', with ' + this.furColor +' fur, ' + this.legs +' legs, and a ' + this.tail +' tail.');
   }
 }
 
