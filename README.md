@@ -65,7 +65,7 @@ Javascript does not support (true) classical inheritance.
 
 A more in-depth discussion regarding descriptions of prototypal inheritance, can be found [here](https://alexsexton.com/blog/2013/04/understanding-javascript-inheritance/).  The following is extracted from that article:
 
-```javascript
+```js
 // define a prototype object with defaults.
 const defaults = {
   zero: 0,
@@ -127,7 +127,7 @@ At it's core, functional programming is based on the four main principles:
 
 *compose*
 
-```javascript
+```js
 // defining compose function
 // this evalutes the functions 
 // right-to-left (or bottom-to-top) 
@@ -147,7 +147,7 @@ pipe(
 ```
 *pipe*
 
-```javascript
+```js
 // defining pipe function
 // this evalutes the functions 
 // left-to-right ( or top-to-bottom) 
@@ -263,15 +263,17 @@ In summary: Lambda means "function used as data".
 
 A more in-depth discussion of closures is given [here](https://oclipa.github.io/csharp-cheat-sheet/#closures?expand) (in the context of C#, but the general principles apply to Javascript).  
 
-Im suuary, there are two basic uses cases:
+In summary, there are two basic use cases:
 1. Storing the state of data to be used in a particular method at a later time.
 1. Hiding data but leaving it accessible to a particular method.
 
 The following are a couple of illustrative examples...
 
-This first example demonstrates a problem that closures can solve.  At first glance this might be expected to print out (0, 1, 2, ...etc), but the actual output will be (10, 10, 10, ...etc).  This is because `i` exists in the scope of the `createPrinters` function, so the latest value (10) will be used when the function is evaluated.
+This first example demonstrates a problem that closures can solve:  
+   * At first glance this might be expected to print out (0, 1, 2, ...etc), but the actual output will be (10, 10, 10, ...etc).  
+   * This is because `i` exists in the scope of the `createPrinters` function, so the latest value (10) will be used when the function is evaluated.
 
-```javascript
+```js
 const createPrinters = () => { 
   
   const arr = []; 
@@ -303,9 +305,11 @@ printers.map(printer => {
             });
 
 ```
-This second example shows a solution to the first example. `val` is scoped within a closure (basically, a couple of nested functions), so it will retain whichever value it had when the closure was instantiated.  When the `createPrinters` function is evaluated, the output will be the less surprising (0, 1, 2, ...etc).
+This second example shows a solution to the first example:
+   * `val` is scoped within a closure (basically, a couple of nested functions), so it will retain whichever value it had when the closure was instantiated.  
+   * When the `createPrinters` function is evaluated, the output will be the less surprising (0, 1, 2, ...etc).
 
-```javascript
+```js
 const createPrinters = () => { 
     
   const createClosure = (val) => { 
@@ -339,9 +343,10 @@ printers.map(printer => {
             })
 ```
 
-This final example demonstrates how a closure can be used for data privacy.  In this case, our hero's profession can only be revealed by asking him directly (with a password!), unlike his appearance, which can be seen just by looking at him:
+This final example demonstrates how a closure can be used for data privacy:
+   * In this case, our hero's profession can only be revealed by asking him directly (with a password!), unlike his appearance, which can be seen just by looking at him.
 
-```javascript
+```js
 const animal = {
   animalType: 'animal',
  
@@ -393,8 +398,8 @@ const ask = (animal, password) => {
 
 const james = mouse();
 
-peek(james);
-ask(james, "skyfall");
+peek(james); // "secret"
+ask(james, "skyfall"); // "spy"
 ```
 </div>
 </div>
@@ -424,7 +429,7 @@ Higher Order Functions are fundamental to the way Javascript works.  Essentially
 
 A Higher Order Function accepts one or more functions as arguments and returns another function.
 
-```javascript
+```js
 const strArray = ['JavaScript', 'Python', 'PHP', 'Java', 'C'];
 
 // this is a higher order function
@@ -530,9 +535,10 @@ body {
 
 *oneway.js*
 
-```javascript
+```js
 import './oneway.css';
 
+// create an array of quotes
 const quotes = [
   {
     author: 'Albert Einstein',
@@ -540,15 +546,19 @@ const quotes = [
   },
   {
     author: 'Robert Frost',
-    quote: 'Two roads diverged in a wood, and I—I took the one less traveled by, And that has made all the difference.'
+    quote: `Two roads diverged in a wood, and I—I took the one 
+            less traveled by, And that has made all the difference.`
   }
 ];
 
 // timer mimics user interaction
+// setInterval() is a built-in function provided by the window.
 setInterval(() => {
 
   // 1) at intervals, a random quote is "selected by the user"
-  const index = Math.floor(Math.random() * Math.floor(quotes.length));
+  const index = Math.floor(
+    Math.random() * Math.floor(quotes.length)
+  );
   const { author, quote } = quotes[index];
   
   // 2) selected quote is "sent to model"
@@ -556,34 +566,55 @@ setInterval(() => {
     author: author,
     quote: quote
   });
-}, 2000);
+}, 2000); // every 2 seconds; triggers render
 
 // Proxy mimics model
-const createState = (state) => {
-  return new Proxy(state, {
-    set: (state, property, value) => {
+const createStateProxy = (quote) => {
+  return new Proxy(quote, {
+    // get handler returns a value derived
+    // from the supplied properties 
+    //(e.g. validation)
+    // get: (quote, property, value) => { }
     
-      // 3) state is updated
-      state[property] = value;
+    // set handler allows the quote to
+    // to be updated based on the property
+    // and value; returns a boolean to 
+    // indicate success.
+    set: (quote, property, value) => {
+    
+      // 3) quote is updated
+      quote[property] = value;
       
-      // 4) updated state is "sent to UI"
+      // 4) updated quote is "sent to UI"
       render();
+      
       return true;
     }
   });
 };
 
-const state = createState(quotes[0]);
+const stateProxy = createStateProxy(quotes[0]);
 
 const render = () => {
-  const bindings = Array.from(document.querySelectorAll('[data-binding]')).map(
+  // get all data-binding ids in HTML document
+  const bindings = Array.from(
+    document.querySelectorAll('[data-binding]')
+  ).map(
     e => e.dataset.binding
   );
+  
+  // if the data-binding ids match a property
+  // in the stateProxy, update the HTML to display
+  // the property value
   bindings.forEach(binding => {
-    if (state[binding]) {
-      document.querySelector(`[data-binding='${binding}']`).innerHTML = state[binding];
+    if (stateProxy[binding]) {
+      document.querySelector(
+        `[data-binding='${binding}']`
+      ).innerHTML = stateProxy[binding];
     } else {
-      throw new ReferenceError(`${binding} is a not a member of the current state`);
+      throw new ReferenceError(
+          `${binding} is a not a member of the current page`
+      );
     }
   });
 };
@@ -788,7 +819,7 @@ promise.then(
 <button type="button" class="collapsible">+ A Simple Web App</button>   
 <div class="content" style="display: none;" markdown="1">
 
-*index.js*
+*index.html*
 
 ```html
 <!DOCTYPE html>
@@ -813,7 +844,7 @@ promise.then(
 
 *index.js*
 
-```javascript
+```js
 let quotesDiv = document.getElementById('quotes');
 
 fetch('https://api.kanye.rest')
@@ -843,6 +874,45 @@ catButton.addEventListener('click', (evt) => {
 </div>
 </div>
 
+<div id="modules">
+<button type="button" class="collapsible">+ Modules</button>   
+<div class="content" style="display: none;" markdown="1">
+
+**Importing in ES6**
+
+```js
+import 'helpers'
+// ES5: require('···')
+
+import Express from 'express'
+// ES5: const Express = require('···').default || require('···')
+
+import { indent } from 'helpers'
+// ES5: const indent = require('···').indent
+
+import * as Helpers from 'helpers'
+// ES5: const Helpers = require('···')
+
+import { indentSpaces as indent } from 'helpers'
+// ES5: const indent = require('···').indentSpaces
+```
+
+**Exporting in ES6**
+
+```js
+export default function () { ··· }
+// ES5: module.exports.default = ···
+
+export function mymethod () { ··· }
+// ES5: module.exports.mymethod = ···
+
+export const pi = 3.14159
+// ES5: module.exports.pi = ···
+```
+
+</div>
+</div>
+
 <div id="createobj">
 <button type="button" class="collapsible">+ Creating An Object</button>   
 <div class="content" style="display: none;" markdown="1">
@@ -865,11 +935,11 @@ As a general rule of thumb, Prototypal Inheritance and Classes should be avoided
 
 This is the basic way to create an object in javascript.
 
-```javascript
+```js
 let X = { p1: a, p2: b, myMethod () { return `my method`; } }
 ```
 e.g.:
-```javascript
+```js
 let mouse = {
   furColor: 'brown',
   legs: 4,
@@ -894,7 +964,7 @@ In this case, a new object is created from a base object (using `Object.create()
 * `Object.assign()` copies all enumerable own properties from one or more source objects to a target object
    * An "own property" is one that is not inherited.
 
-```javascript
+```js
 let baseX = { p1: a, p2: b, myMethod() { return `base method` } }
 
 let concreteSubX = return Object.assign(
@@ -902,7 +972,7 @@ let concreteSubX = return Object.assign(
 );
 ```
 e.g.:
-```javascript
+```js
 let animal = {
   animalType: 'animal',
   
@@ -933,7 +1003,7 @@ let mouse = Object.assign(
 
 A slight refinement upon using `Object.create()` directly is to wrap it in a factory function.  This allows the function to be called multiple times.
 
-```javascript
+```js
 let baseX = { p1: a, p2: b, myMethod() { return `base method`; } }
 
 let subX = function subX () {
@@ -945,7 +1015,7 @@ let subX = function subX () {
 let concreteSubX = subX();
 ```
 e.g.:
-```javascript
+```js
 let animal = {
   animalType: 'animal',
  
@@ -979,7 +1049,7 @@ let mickey = mouse();
 
 This is the core principle upon which inheritance in javascript is based.
 
-```javascript
+```js
 function BaseX(a, b) 
 { 
   p1: a, 
@@ -1008,7 +1078,7 @@ const baseX = new BaseX('a', 'b');
 const subX = new SubX('c', 'd', e);
 ```
 e.g.:
-```javascript
+```js
 function Rodent(rodentType, furColor, legs, tail) {
   this.rodentType = rodentType;
   this.furColor = furColor;
@@ -1058,7 +1128,7 @@ console.log(mouse.describe());
 
 Note that `class` is simply syntactical sugar on prototype inheritance, so this example and the preceeding one are essentially identical under-the-covers.  The `class` pattern in ES6 is not the same as classical inheritance.
 
-```javascript
+```js
 class BaseX {
   constructor(a, b) {
     this.p1 = a;
@@ -1082,7 +1152,7 @@ const baseX = new BaseX('a', 'b');
 const subX = new SubX('c', 'd', e);
 ```
 e.g.:
-```javascript
+```js
 class Rodent {
   constructor(rodentType, furColor, legs, tail) {
     this.rodentType = rodentType;
@@ -1125,6 +1195,34 @@ console.log(mouse.describe());
 </div>
 </div>
 
+<div id="defaults">
+<button type="button" class="collapsible">+ Default Values</button>   
+<div class="content" style="display: none;" markdown="1">
+
+Default array values:
+
+```js
+const scores = [22, 33]]
+const [math = 50, sci = 50, arts = 50] = scores
+
+// Result:
+// math === 22, sci === 33, arts === 50
+```
+
+Default argument values:
+
+```js
+function greet({ name = 'Rauno' } = {}) {
+  console.log(`Hi ${name}!`);
+}
+ 
+greet() // Hi Rauno!
+greet({ name: 'Larry' }) // Hi Larry!
+```
+
+</div>
+</div>
+
 <div id="var">
 <button type="button" class="collapsible">+ var, let &amp; const</button>   
 <div class="content" style="display: none;" markdown="1">
@@ -1154,7 +1252,7 @@ With the release of ES6, avoid using `var`.
 <button type="button" class="collapsible">+ Function Syntax</button>   
 <div class="content" style="display: none;" markdown="1">
 
-```javascript   
+```js   
     // anonymous function 
     var multiply = function(x, y) {
         return (     // or, return x * y;
@@ -1198,7 +1296,7 @@ The difference between a method and a function (in javascript) is:
 
 e.g.
 
-```javascript
+```js
     var object = {
       myMethod: function() {
         console.log("What am I?");
@@ -1232,7 +1330,7 @@ The general form is `(function(){ })();`.
 
 "Traditional" Function (ES5):
 
-```javascript
+```js
 function myFunc() {
   console.log(arguments);
   return ...
@@ -1241,7 +1339,7 @@ function myFunc() {
 
 Arrow Function (ES6):
 
-```javascript
+```js
 const myFunc = (args) => ({
   console.log(args);
   ...
@@ -1254,6 +1352,39 @@ Differences:
 * Arrow functions cannot be [hoisted](https://www.w3schools.com/js/js_hoisting.asp), unlike the ES5 function.
 * Arguments must be explicitly passed into arrow functions (the `arguments` object is only available to ES5 functions).
 * Cannot use arrow functions as constructors or methods (see below).
+</div>
+</div>
+
+<div id="getset">
+<button type="button" class="collapsible">+ Getters & Setters</button>   
+<div class="content" style="display: none;" markdown="1">
+
+```js
+const Car = {
+  get started () {
+    return this.status === 'started'
+  },
+  set started (value) {
+    this.status = value ? 'started' : 'stopped'
+  }
+}
+```
+</div>
+</div>
+
+<div id="extract-values">
+<button type="button" class="collapsible">+ Extracting Values From Objects</button>   
+<div class="content" style="display: none;" markdown="1">
+
+```js
+const langCode = { language: "English", code: "en" }
+
+Object.values(langCode)
+// [English, "en"]
+
+Object.entries(langCode)
+// [["language", "English"], ["code", "en"]]
+```
 </div>
 </div>
 
@@ -1270,7 +1401,7 @@ Both Spread and Rest use the same operator: `...`
 **Spread:**
    * Used to split up (i.e. spread) array elements OR object properties.
 
-```javascript
+```js
 // create new array by splitting the old 
 // array and adding objects a and b
 
@@ -1296,7 +1427,7 @@ const newObject = ({ ...oldObject,
 
 An example of the general case is:
 
-```javascript
+```js
 var dogPref = ["Dogs" , "Like" , "Bones"];
 const [animal , ...pref] = dogPref;
 console.log(animal); // Dogs
@@ -1305,7 +1436,7 @@ console.log(pref); // [ "Like", "Bones"]
 
 A more common case is for handling arguments passed to a function:
 
-```javascript
+```js
 // args can be an unlimited list of 
 // arguments.
 // The rest operator merges all of the 
@@ -1326,7 +1457,7 @@ The [destructuring assignment](https://developer.mozilla.org/en-US/docs/Web/Java
 
 For arrays:
 
-```javascript
+```js
 let a, b, rest;
 [a, b] = [10, 20];
 
@@ -1344,7 +1475,7 @@ console.log(rest);
 
 There is a similar syntax for objects (simply replaces `[]` with `{}`): 
 
-```javascript
+```js
 {name} = {name:'Max', age: 28};
 console.log(name); // Max
 console.log(age); // undefined
@@ -1381,7 +1512,7 @@ A discussion of the mutating vs non-mutating array functions can be found here:
 * This method does not mutate the array.
 * Syntax: `const newArray = array.map(() => { })`
 
-```javascript
+```js
 const array1 = [1, 4, 9, 16];
 
 // pass a function to map
@@ -1401,7 +1532,7 @@ console.log(map1);
 * **This method mutates the array.**
 * Syntax: `const element = array.pop()`
 
-```javascript
+```js
 const plants = ['broccoli', 'cauliflower', 'cabbage', 'kale', 'tomato'];
 
 console.log(plants.pop());
@@ -1426,7 +1557,7 @@ console.log(plants);
 * **This method mutates the array.**
 * Syntax: `const len = array.push(element1[, ...[, elementN]])`
 
-```javascript
+```js
 const animals = ['pigs', 'goats', 'sheep'];
 
 const count = animals.push('cows');
@@ -1447,7 +1578,7 @@ console.log(animals);
 * Returns the **first** element in an array that matches the testing function. 
 * This method does not mutate the array.
 
-```javascript
+```js
 const array1 = [5, 12, 8, 130, 44];
 
 const res = array1.find(element => 
@@ -1466,7 +1597,7 @@ console.log(res);
 * Returns the index of the **first** element in an array that matches the testing function. 
 * This method does not mutate the array.
 
-```javascript
+```js
 const array1 = [5, 12, 8, 130, 44];
 
 const isLarge = (element) => 
@@ -1485,7 +1616,7 @@ console.log(array1.findIndex(isLarge));
 * Returns a new array that only contains elements of the input array that match the testing function. 
 * This method does not mutate the array.
 
-```javascript
+```js
 const words = ['spray', 'limit', 'elite', 
                 'enflame', 'dutiful', 
                 'present'];
@@ -1507,7 +1638,7 @@ console.log(res);
 * Applies a [reducer](https://www.robinwieruch.de/javascript-reducer) function to each element of an array, resulting in a single output value.
 * This method does not mutate the array.
 
-```javascript
+```js
 const array1 = [1, 2, 3, 4];
 const reducer = (total, currentValue) => 
                       total + currentValue;
@@ -1531,7 +1662,7 @@ console.log(array1.reduce(reducer, 5));
 * This method does not mutate the array.
 * Syntax 1: `array1.concat[array2, array3, ...arrayN]`
 
-```javascript
+```js
 const letters = ['a', 'b', 'c'];
 const numbers = [1, 2, 3];
 
@@ -1543,7 +1674,7 @@ letters.concat(numbers);
 
 * Syntax 2: `array1.concat[value1[, value2[, ...[, valueN]]]]`
 
-```javascript
+```js
 const letters = ['a', 'b', 'c'];
 
 const result = letters.concat(1, [2, 3]);
@@ -1562,7 +1693,7 @@ console.log(result);
 * This method does not mutate the array.
 * Syntax: `slice[inclusive begin, exclusive end]`
 
-```javascript
+```js
 const animals = ['ant', 'bison', 
                   'camel', 'duck', 
                   'elephant'];
@@ -1590,7 +1721,7 @@ console.log(animals.slice(1, 5));
 * **This method mutates the array.**
 * Syntax: `let arrDeletedItems = array.splice(start[, deleteCount[, item1[, item2[, ...]]]])`
 
-```javascript
+```js
 const months = ['Jan', 'March', 
                 'April', 'June'];
 months.splice(1, 0, 'Feb');
@@ -1617,10 +1748,10 @@ console.log(months);
 <button type="button" class="collapsible">+ Template Literals/Strings</button>   
 <div class="content" style="display: none;" markdown="1">
 
-Template literals (a.k.a template strings) use ticks marks to indicate that a string can contain placeholders, or is split over multiple lines.
+Template literals (a.k.a. template strings) use ticks marks to indicate that a string can contain placeholders, or is split over multiple lines.
 
 e.g.
-```javascript
+```js
 `string text`
 
 `string text line 1
@@ -1628,13 +1759,14 @@ e.g.
 
 `string text ${expression} string text`
 ```
+
 An additional use of template literals is to "tag" a templated string with a function that accepts the template strings and placeholders as arguments:
 
-```javascript
+```js
 tag`string text ${expression} string text`
 ```
 e.g.:
-```javascript
+```js
 function myTag(strings, ...placeHolders) {
   let str0 = strings[0]; // "the rain in "
   let str1 = strings[1]; // " falls mainly on the "
@@ -1662,10 +1794,47 @@ Further information regarding template literals can be found here:
 <button type="button" class="collapsible">+ Converting a String to a Property Name</button>   
 <div class="content" style="display: none;" markdown="1">
 
-Also known as "square bracket" notation:
+The ability to convert a string to a property name is known as "square bracket" notation.  
 
-* https://stackoverflow.com/questions/4968406/javascript-property-access-dot-notation-vs-brackets
-  
+There are three main reasons to do this:
+   * It allows the use of characters that can't be used with dot notation.
+   * It is useful when dealing with property names that vary in a predictable way.
+   * It can be used with properties that themselves contain a dot.
+
+*Uncommon Characters*
+
+```js
+var foo = myForm.foo[]; // incorrect syntax
+var foo = myForm["foo[]"]; // correct syntax
+```
+
+Note that this includes non-ASCII (UTF-8) characters, as in `myForm["ダ"]`.
+
+*Predictable Property Names*
+
+```js
+for (var i = 0; i < 10; i++) {
+  someFunction(myForm["myControlNumber" + i]);
+}
+```
+
+```js
+let event = 'click'
+let handlers = {
+  [`on${event}`]: true
+}
+// Same as: handlers = { 'onclick': true }
+```
+
+*Property Names Containing Dots*
+
+For example, a json response could contain a property called `foo.Bar`.
+
+```js
+var foo = myResponse.foo.Bar; // incorrect syntax
+var foo = myResponse["for.Bar"]; // correct syntax
+```
+
 </div>
 </div>
 
@@ -1699,6 +1868,38 @@ In summary:
 </div>
 </div>
 
+<div id="generators">
+<button type="button" class="collapsible">+ Generators</button>   
+<div class="content" style="display: none;" markdown="1">
+
+A Generator simplifies creating an iterator.  It is defined using the `function*` (note that `*`) and `yield` syntax, and exposes the `next()` method.
+
+For example:
+
+```js
+function* idMaker () {
+  let id = 0
+  while (true) { yield id++ }
+}
+
+let gen = idMaker()
+gen.next().value  // → 0
+gen.next().value  // → 1
+gen.next().value  // → 2
+```
+
+Alternatively, a Generator can be iterated over using a for-of loop:
+
+```js
+for (const i of gen) {
+  if (i > 100)
+    break;
+  console.log(`id: ${i}`);
+}
+```
+</div>
+</div>
+
 <div id="semi">
 <button type="button" class="collapsible">+ Semi-Colons!</button>   
 <div class="content" style="display: none;" markdown="1">
@@ -1712,7 +1913,7 @@ Javascript is pretty flexible when it comes to the presence (or lack) of semi-co
 
 Always put semi-colons after statements:
 
-```javascript
+```js
 var i;                        // variable declaration
 i = 5;                        // value assignment
 i = i + 1;                    // value assignment
@@ -1728,7 +1929,7 @@ Strictly speaking, semi-colons are not required in these cases unless the statem
 
 Don't need to put semi-colons after a curly bracket *unless* something is being assigned (e.g. `var obj = {};`):
 
-```javascript
+```js
 if  (...) {...} else {...}
 for (...) {...}
 while (...) {...}
@@ -1743,7 +1944,7 @@ In these cases, adding a semi-colon is harmless, but it is good practice to leav
 
 After the closing parenthensis of an `if`, `for`, `while` or `switch` statement:
 
-```javascript
+```js
 if (0 === 1); { alert("hi") }
 
 // equivalent to:
@@ -1762,7 +1963,7 @@ alert ("hi");
 
 * The closing parenthensis of a Self-Executing Function:
 
-```javascript
+```js
 (function (parameters) {
     // Function body
 })(parameters);
@@ -1772,7 +1973,7 @@ alert ("hi");
 
 * Inside the `()` of a `for` loop, semicolons only go after the first and second statement, never after the third:
 
-```javascript
+```js
 for (var i=0; i < 10; i++)  {/*actions*/} // correct
 for (var i=0; i < 10; i++;) {/*actions*/} // SyntaxError
 ```
