@@ -1360,6 +1360,8 @@ A discussion of the mutating vs non-mutating array functions can be found here:
 **[`map()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)**
 
 * Applies a function to each element in an array and returns a new array with the result.
+* This method does not mutate the array.
+* Syntax: `const newArray = array.map(() => { })`
 
 ```javascript
 const array1 = [1, 4, 9, 16];
@@ -1593,12 +1595,48 @@ console.log(months);
 </div>
 </div>
 
-<div id="semi">
-<button type="button" class="collapsible">+ Template Strings</button>   
+<div id="template">
+<button type="button" class="collapsible">+ Template Literals/Strings</button>   
 <div class="content" style="display: none;" markdown="1">
 
-* template strings 'some text and a ${templateString} can be output ${likeThis}'
+Template literals (a.k.a template strings) use ticks marks to indicate that a string can contain placeholders, or is split over multiple lines.
 
+e.g.
+```
+`string text`
+
+`string text line 1
+ string text line 2`
+
+`string text ${expression} string text`
+```
+An additional use of template literals is to "tag" a templated string with a function that accepts the template strings and placeholders as arguments:
+
+```
+tag`string text ${expression} string text`
+```
+e.g.:
+```
+function myTag(strings, ...placeHolders) {
+  let str0 = strings[0]; // "the rain in "
+  let str1 = strings[1]; // " falls mainly on the "
+  
+  let country = placeHolders[0]; // ${country}
+  let location = placeHolders[1]; // ${location}
+
+  return `${str0}${country}${str1}${location}`;
+}
+
+let country = 'Italy';
+let location = 'Rome';
+let output = myTag`the rain in ${country} falls mainly on ${location}`;
+
+console.log(output); // the rain in Italy falls mainly on Rome
+```
+Note that the template function does not need to return a string.
+
+Further information regarding template literals can be found here:
+* [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)
 </div>
 </div>
 
