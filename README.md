@@ -408,13 +408,98 @@ ask(james, "skyfall"); // "spy"
 <button type="button" class="collapsible">+ Currying</button>   
 <div class="content" style="display: none;" markdown="1">
 
-* What is currying?
+**Simple Example**
 
-* How does currying work?
+Consider the following function that multiplies two numbers:
+```js
+function multiply(x, y) { return x * y; }
+```
+This function can be refactored in the following manner:
+```js
+function curriedMultiply(x) {
+  return function(y) { return x * y; }
+}
+```
+Now, `curriedMultiply` no longer performs the multiplication itself; instead, it returns a specialized multipler function.
 
-* Why is currying useful?
+For example, `curriedMultiply(3)` is effectively the same as the following:
+```js
+function(y) {
+  return 3 * y;
+}
+```
+It is also worth noting that `multiply(x, y)` is equivalent to `curriedMultiply(x)(y)`.
 
-* https://blog.bitsrc.io/understanding-currying-in-javascript-ceb2188c339
+**A More Real-World Example**
+
+Consider how `fs.readFile(path, encoding, callback)` can be curried to separate out the callback parameter:
+```js
+fs.curriedReadFile(path, encoding);
+```
+This now returns a specialized reader function:
+```js
+const reader = fs.curriedReadFile("hello.txt", "utf8");
+
+reader(callback);
+```
+Here, `reader` is an asynchronous function that only knows how to read `hello.txt` and has a single callback parameter.
+
+This is useful because `curriedReadFile` can be implemented so that it starts the asynchronous read operation but we are not forced to use the reader immediately.  The function can be cached or passed around while the I/O operation progresses.  When we need the result, we will call the reader with a callback.
+
+By currying, we have separated the initiation of the asynchronous operation from the retrieval of the result. This is very powerful because now we can initiate several operations in a close sequence, let them do their I/O in parallel, and retrieve their results afterwards. Here is an example:
+
+```js
+const reader1 = curriedReadFile(path1, "utf8");
+const reader2 = curriedReadFile(path2, "utf8");
+// I/O is parallelized and we can do other things while it runs
+
+// further down the line:
+reader1(function(err, data1) {
+  reader2(function(err, data2) {
+    // do something with data1 and data2
+  });
+`});
+```
+
+```js
+function curriedReadFile(path, encoding) {
+  var _done, _error, _result;
+
+  // create a default callback that simply stores the 
+  // results and any error message, and flags that the
+  // I/O is complete.
+  var callback = function(error, result) { 
+    _done = true,
+    _error = error, 
+    _result = result; 
+  };
+
+  // starts reading the file asynchronously.
+  // the callback is passed as a closure; when triggered this
+  // will store the results and any error message (and 
+  // set "done" to true)  
+  fs.readFile(path, encoding, function(e, r) { 
+    callback(e, r); 
+  });
+
+  // Here '_' is the function we pass to curriedReadFile
+  // Where we actually do the IO stuff
+  return function(_) {
+
+    // If fs.readFile returned (_done is set), we just execute our IO code with the results
+    if (_done) {
+      _(_error, _result);
+
+    // If it still hasn't return, our function that does IO stuff ('_') 
+    // now becomes the callback (see fs.readFile body)
+    } else {
+      callback = _; 
+    };
+}
+```
+
+currying is essentially a simple form of "futures".
+
 * https://blog.bitsrc.io/understanding-currying-in-javascript-ceb2188c339
 * https://bjouhier.wordpress.com/2011/04/04/currying-the-callback-or-the-essence-of-futures/
 
