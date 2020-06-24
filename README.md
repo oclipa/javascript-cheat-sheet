@@ -408,7 +408,11 @@ ask(james, "skyfall"); // "spy"
 <button type="button" class="collapsible">+ Currying</button>   
 <div class="content" style="display: none;" markdown="1">
 
-**Simple Example**
+Currying is a process in functional programming in which we can transform a function with multiple arguments into a sequence of nesting functions. It returns a new function that expects the next argument inline.
+
+*NOTE*: the number of nested functions a curried function has depends on the number of arguments it receives. If this is not the case, it is not a *curry* but a *partial function*.
+
+**A Simple Example**
 
 Consider the following function that multiplies two numbers:
 ```js
@@ -417,7 +421,7 @@ function multiply(x, y) { return x * y; }
 This function can be refactored in the following manner:
 ```js
 function curriedMultiply(x) {
-  return function(y) { return x * y; }
+  return (y) => { return x * y; }
 }
 ```
 Now, `curriedMultiply` no longer performs the multiplication itself; instead, it returns a specialized multipler function.
@@ -428,7 +432,7 @@ function(y) {
   return 3 * y;
 }
 ```
-It is also worth noting that `multiply(x, y)` is equivalent to `curriedMultiply(x)(y)`.
+*NOTE*: `multiply(x, y)` is equivalent to `curriedMultiply(x)(y)`.
 
 **A More Real-World Example**
 
@@ -454,8 +458,8 @@ const reader2 = curriedReadFile(path2, "utf8");
 // I/O is parallelized and we can do other things while it runs
 
 // further down the line:
-reader1(function(err, data1) {
-  reader2(function(err, data2) {
+reader1((err, data1) => {
+  reader2((err, data2) => {
     // do something with data1 and data2
   });
 `});
@@ -468,7 +472,7 @@ function curriedReadFile(path, encoding) {
   // create a default callback that simply stores the 
   // results and any error message, and flags that the
   // I/O is complete.
-  var callback = function(error, result) { 
+  var callback = (error, result) => { 
     _done = true,
     _error = error, 
     _result = result; 
@@ -484,24 +488,32 @@ function curriedReadFile(path, encoding) {
 
   // Here '_' is the function we pass to curriedReadFile
   // Where we actually do the IO stuff
-  return function(_) {
+  return (_) => {
 
-    // If fs.readFile returned (_done is set), we just execute our IO code with the results
+    // If fs.readFile returned (_done is set), we just 
+    // execute our IO code with the results
     if (_done) {
       _(_error, _result);
 
-    // If it still hasn't return, our function that does IO stuff ('_') 
-    // now becomes the callback (see fs.readFile body)
+    // If it still hasn't return, our function that 
+    // does IO stuff ('_') now becomes the callback 
+    // (see fs.readFile body)
     } else {
       callback = _; 
     };
+  }
 }
 ```
 
-currying is essentially a simple form of "futures".
+**When Is Currying Useful?**
 
-* https://blog.bitsrc.io/understanding-currying-in-javascript-ceb2188c339
-* https://bjouhier.wordpress.com/2011/04/04/currying-the-callback-or-the-essence-of-futures/
+Some cases where currying is useful are:
+* When you want to write little code modules that can be reused and configured with ease (e.g. for distribution by npm).
+* When you want to avoid frequently calling a function with the same argument.
+
+**Curry == Promise?**
+
+The ability for a curry to encapsulate an asynchronous function and return the result later means that this could be considered a very simple form of a Promise.
 
 </div>
 </div>
