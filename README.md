@@ -2280,6 +2280,44 @@ let & const honour block level scope; var does not
 </div>
 </div>
 
+<div id="polyfill">
+<button type="button" class="collapsible">+ Shims & Polyfills</button>   
+<div class="content" style="display: none;" markdown="1">
+
+A shim is a library that brings a new API to an older environment, using on the means of that environment.
+
+A polyfill is a type of shim that retrofits legacy browsers with modern HTML5/CSS3 features, usually using Javascript or Flash.
+
+A polyfill is a property or function that is added to the prototype of an object
+
+```js
+function Runner(outerContainerId, opt_config) {
+  // Singleton
+  if (Runner.instance_) {
+      return Runner.instance_;
+  }
+  Runner.instance_ = this;
+}
+
+// add polyfill
+Runner.events = {
+  ON_MOUSEUP: 'mouseup',
+};
+```
+
+```js
+class Runner {
+  static get events() {
+    return {
+      ON_MOUSEUP: 'mouseup'
+    }
+  }
+}
+```
+*NOTE*: Be careful not to overwrite existing functionality!
+</div>
+</div>
+
 </div>
 </div>
 
