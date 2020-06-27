@@ -1539,14 +1539,35 @@ For those coming from languages such as C#, it may be useful to think of functio
 </div>
 
 <div id="iife">
-<button type="button" class="collapsible">+ Self-Executing Functions</button>   
+<button type="button" class="collapsible">+ Immediately-Invoked Function Expressions (IIFE)</button>   
 <div class="content" style="display: none;" markdown="1">
 
-Self-Executing Functions (a.k.a Immediately Invoked Function Expressions) are functions which are invoked immediately after being defined, i.e. they don't need to be explicitly called elsewhere in the code.
+Immediately Invoked Function Expressions (a.k.a. Self-Executing Functions) are functions which are invoked immediately after being defined, i.e. they don't need to be explicitly called elsewhere in the code.
 
 The general form is `(function(){ })();`.  
    * The parentheses around the function are to ensure that the code within the function is contained in the private scope of the function.
    * The parentheses at the end of the function are what invokes the function.
+   
+Common pattern to prevent collisions when importing multiple javascript files:
+
+```jsx
+(function () {
+
+    function MyFunc() {
+    }
+    
+    // register MyFunc function with window scope
+    window['MyFunc'] = MyFunc;
+
+    ...etc...
+})();
+
+function onDocumentLoad() {
+    new MyFunc();
+}
+
+document.addEventListener('DOMContentLoaded', onDocumentLoad);
+```
 </div>
 </div>
 
@@ -2203,6 +2224,62 @@ alert ("hi");
 for (var i=0; i < 10; i++)  {/*actions*/} // correct
 for (var i=0; i < 10; i++;) {/*actions*/} // SyntaxError
 ```
+</div>
+</div>
+
+<div id="data-types">
+<button type="button" class="collapsible">+ To Be Written Up</button>   
+<div class="content" style="display: none;" markdown="1">
+
+<div id="data-types">
+<button type="button" class="collapsible">+ Data Types</button>   
+<div class="content" style="display: none;" markdown="1">
+  
+Data Types:
+primitives & objects
+Primitives: number, object, string, boolean
+Objects: Number, String, Function, Object, Array
+Type Coercion: process of converting value from one type to another (e.g. string -> number, object -> boolean, etc.)
+Implicit: 5 + "3" = "53"; true + false = 1; "6" - 1 = "5"
+Explicit: Number("5"), String(true), Boolean(31)
+
+Priority: boolean -> number -> string
+
+Boolean("any string") == true
+
+Loose Coercion: ==
+
+False Positives: false, 0, 
+
+All objects are evaluated to strings in concatentation
+
+var myNumber = 2 // instanceof Number == false; myNumber === 2 = false; myNumber == 2 = true
+var myNumber = Number(2) // instanceof Number == false
+var myNumber = new Number(2) // instanceof Number == true
+
+</div>
+</div>
+
+<div id="scope">
+<button type="button" class="collapsible">+ Scope</button>   
+<div class="content" style="display: none;" markdown="1">
+
+Three levels of scope:
+  * global
+     * globalThis (var self = window || global;)
+  * function
+  * block
+
+Scope inherits from parent to child.
+
+Mixin:
+interceptorMixin(authMixin(HttpClass))
+
+let & const honour block level scope; var does not
+
+</div>
+</div>
+
 </div>
 </div>
 
