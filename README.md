@@ -2321,6 +2321,29 @@ class Runner {
 </div>
 </div>
 
+<div id="try-catch">
+<button type="button" class="collapsible">+ Try/Catch</button>   
+<div class="content" style="display: none;" markdown="1">
+
+This is basically the same as C# and Java:
+
+```js
+try {
+  tryCode - Block of code to try
+}
+catch(err) {
+  catchCode - Block of code to handle errors
+  details: err.message
+  rethrow: throw err
+}
+finally {
+  finallyCode - Block of code to be executed regardless of the try / catch result
+}
+```
+
+</div>
+</div>
+
 &nbsp;
 
 &nbsp;
