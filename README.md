@@ -2328,8 +2328,29 @@ class Runner {
 This is basically the same as C# and Java:
 
 ```js
+function CustomException(message, metadata) {
+  const error = new Error(message);
+
+  error.code = "THIS_IS_A_CUSTOM_ERROR_CODE";
+  error.metadata = metadata;
+  return error;
+}
+
+CustomException.prototype = Object.create(Error.prototype);
+```
+
+```js
 try {
   tryCode - Block of code to try
+  
+  // simplest case
+  // throw "You died!";
+  
+  // better case
+  throw new Error("You died");
+  
+  // best case
+  throw new KilledException("You died", { who: "Colonel Mustard", where: "Study", with: "Candlestick" } )
 }
 catch(err) {
   catchCode - Block of code to handle errors
