@@ -2328,15 +2328,19 @@ class Runner {
 This is basically the same as C# and Java:
 
 ```js
-function CustomException(message, metadata) {
+function KilledException(message, metadata) {
   const error = new Error(message);
 
+  // code can be overridden
   error.code = "THIS_IS_A_CUSTOM_ERROR_CODE";
+  
+  // can also add additional properties
   error.metadata = metadata;
+  
   return error;
 }
 
-CustomException.prototype = Object.create(Error.prototype);
+KilledException.prototype = Object.create(Error.prototype);
 ```
 
 ```js
@@ -2347,15 +2351,15 @@ try {
   // throw "You died!";
   
   // better case
-  throw new Error("You died");
+  //throw new Error("You died");
   
   // best case
   throw new KilledException("You died", { who: "Colonel Mustard", where: "Study", with: "Candlestick" } )
 }
 catch(err) {
   catchCode - Block of code to handle errors
-  details: err.message
-  rethrow: throw err
+  // to show details: err.message
+  // to rethrow: throw err
 }
 finally {
   finallyCode - Block of code to be executed regardless of the try / catch result
