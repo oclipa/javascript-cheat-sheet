@@ -2115,6 +2115,49 @@ In summary:
 </div>
 </div>
 
+<div id="convertJsonToObject">
+<button type="button" class="collapsible">+ Converting JSON to an Object</button>   
+<div class="content" style="display: none;" markdown="1">
+
+Although JavaScript provides the `JSON.parse(src)` function, this throws an exception if the `src` is not valid JSON, which may not be desirable (it is generally bad practice to use try/catch for expected behaviour).  To avoid this, it is possible to add a `tryParse(src)` function to the `JSON` object.
+
+For example,
+
+```jsx
+function tryParse(suspect) {
+  suspect = typeof suspect !== 'string' ? JSON.stringify(suspect) : suspect;
+
+  try {
+    suspect = JSON.parse(suspect);
+  } catch (e) {
+    return { value: suspect, valid: false };
+  }
+
+  return { value: suspect, valid: typeof suspect === 'object' && suspect !== null };
+}
+
+JSON['tryParse'] = tryParse;
+```
+
+This can be used in the following manner:
+
+```jsx
+  const res = await fetch('https://api.github.com/repos/vercel/next.js');
+  const src = await res.text();
+  
+  const result = JSON.tryParse(src);
+  const parsedSrc = result.value;
+
+  if (result.valid) {
+    // handle valid JSON
+  } else {
+    // handle invalid JSON
+  }
+```
+
+</div>
+</div>
+
 <div id="generators">
 <button type="button" class="collapsible">+ Generators</button>   
 <div class="content" style="display: none;" markdown="1">
@@ -2256,49 +2299,6 @@ All objects are evaluated to strings in concatentation
 var myNumber = 2 // instanceof Number == false; myNumber === 2 = false; myNumber == 2 = true
 var myNumber = Number(2) // instanceof Number == false
 var myNumber = new Number(2) // instanceof Number == true
-
-</div>
-</div>
-
-<div id="convertJsonToObject">
-<button type="button" class="collapsible">+ Converting JSON to an Object</button>   
-<div class="content" style="display: none;" markdown="1">
-
-Although JavaScript provides the `JSON.parse(src)` function, this throws an exception if the `src` is not valid JSON, which may not be desirable (it is generally bad practice to use try/catch for expected behaviour).  To avoid this, it is possible to add a `tryParse(src)` function to the `JSON` object.
-
-For example,
-
-```jsx
-function tryParse(suspect) {
-  suspect = typeof suspect !== 'string' ? JSON.stringify(suspect) : suspect;
-
-  try {
-    suspect = JSON.parse(suspect);
-  } catch (e) {
-    return { value: suspect, valid: false };
-  }
-
-  return { value: suspect, valid: typeof suspect === 'object' && suspect !== null };
-}
-
-JSON['tryParse'] = tryParse;
-```
-
-This can be used in the following manner:
-
-```jsx
-  const res = await fetch('https://api.github.com/repos/vercel/next.js');
-  const src = await res.text();
-  
-  const result = JSON.tryParse(src);
-  const parsedSrc = result.value;
-
-  if (result.valid) {
-    // handle valid JSON
-  } else {
-    // handle invalid JSON
-  }
-```
 
 </div>
 </div>
