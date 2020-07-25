@@ -2365,7 +2365,7 @@ class Runner {
 </div>
 
 <div id="try-catch">
-<button type="button" class="collapsible">+ Try/Catch</button>   
+<button type="button" class="collapsible">+ Exceptions &amp; Try/Catch</button>   
 <div class="content" style="display: none;" markdown="1">
 
 This is basically the same as C# and Java:
@@ -2406,6 +2406,21 @@ catch(err) {
 }
 finally {
   finallyCode - Block of code to be executed regardless of the try / catch result
+}
+```
+
+&nbsp;
+
+An OOP class-based alternative to the functional exception above would be:
+
+```js
+class KilledException extends Error {
+  constructor(message, metadata) {
+    super(message);
+    this.name = 'KILLED_ERROR';
+    this.code = "THIS_IS_A_CUSTOM_ERROR_CODE";
+    this.metadata = metadata;  
+  }
 }
 ```
 
