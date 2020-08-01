@@ -910,7 +910,7 @@ promise.then(
 </div>
 </div>
 
-### Basics
+## Basics
 
 <div id="nodejs">
 <button type="button" class="collapsible">+ Installing NodeJS</button>   
