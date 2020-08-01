@@ -889,7 +889,18 @@ A promise has 3 states:
    * Rejected: `onRejected()` will be called (e.g., `reject()` was called)
    * Pending: not yet fulfilled or rejected
 
-Callbacks are attached to promise to handle the returned value.  Once returned, a promise is considered "settled" and cannot be reused (it is immutable).
+A simple example is:
+
+```js
+let promise = new Promise(function(resolve, reject) {
+  if(promise_kept)
+    resolve("done");
+  else
+    reject(new Error("…"));  
+});
+```
+
+`resolve` and `reject` are callbacks to react to the result of the promise.  Once returned, a promise is considered "settled" and cannot be reused (it is immutable).
 
 A promise will immediately start doing a task.  If there is less hurry, alternatives are Observables (which allow composition of tasks - see RxJS) and Tasks (which are similar to promises but concern computations rather than results - can start/cancel/stop the computation).
 
@@ -2162,23 +2173,20 @@ This can be used in the following manner:
 <button type="button" class="collapsible">+ Generators</button>   
 <div class="content" style="display: none;" markdown="1">
 
-A Generator simplifies creating an iterator.  It is defined using the `function*` (note that `*`) and `yield` syntax, and exposes the `next()` method.
+A Generator is a special function that is defined using the `function*` (note that `*`) and `yield` syntax, and exposes the `next()` method.
 
-For example:
+Although this is most commonly used to simplify creating an iterator, the main power of the function comes from the ability to be paused and resumed using the `yield` keyword.
+
+For example, in the most familiar case, an iterator function may be implemented in the following manner:
 
 ```js
 function* idMaker () {
   let id = 0
   while (true) { yield id++ }
 }
-
-let gen = idMaker()
-gen.next().value  // → 0
-gen.next().value  // → 1
-gen.next().value  // → 2
 ```
 
-Alternatively, a Generator can be iterated over using a for-of loop:
+This can then either be accessed using a for-of loop:
 
 ```js
 for (const i of gen) {
@@ -2187,6 +2195,60 @@ for (const i of gen) {
   console.log(`id: ${i}`);
 }
 ```
+
+or the individual yielded values can be accessed sequentially using ther `next()` function:
+
+```js
+let gen = idMaker()
+gen.next().value  // → 0
+gen.next().value  // → 1
+gen.next().value  // → 2
+```
+
+A possibly less familiar use case is to use multiple `yield` statements in a function, to perform several tasks in sequence:
+
+```js
+function* generator(e) {  
+  yield e + 10;  
+  yield e + 25;  
+  yield e + 33;
+}
+
+var generate = generator(27);
+console.log(generate.next().value); // 37
+console.log(generate.next().value); // 52
+console.log(generate.next().value); // 60
+console.log(generate.next().value); // undefined
+```
+
+The following is a crude example of emulating an async/await function using a generator:
+
+*async/await version*
+
+```js
+async function async-await() {
+  let a=await(task1);
+  console.log(a);
+  let b=await(task2);
+  console.log(b);
+  let c=await(task3);
+  console.log(c);
+}
+```
+
+*generator version*
+
+```js
+function * generator-promise() {
+  let a=yield Promise1();
+  console.log(a);
+  let b=yield Promise1();
+  console.log(b);
+  let c=yield Promise1();
+  console.log(c);
+}
+```
+
 </div>
 </div>
 
