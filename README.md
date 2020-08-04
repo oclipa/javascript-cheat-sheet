@@ -889,35 +889,168 @@ A promise has 3 states:
    * Rejected: `onRejected()` will be called (e.g., `reject()` was called)
    * Pending: not yet fulfilled or rejected
 
-A simple example is:
-
-```js
-let promise = new Promise(function(resolve, reject) {
-  if(promise_kept)
-    resolve("done");
-  else
-    reject(new Error("…"));  
-});
-```
-
-`resolve` and `reject` are callbacks to react to the result of the promise.  Once returned, a promise is considered "settled" and cannot be reused (it is immutable).
+`resolve` and `reject` are callbacks that react to the result of the promise.  Once returned, a promise is considered "settled" and cannot be reused (it is immutable).
 
 A promise will immediately start doing a task.  If there is less hurry, alternatives are Observables (which allow composition of tasks - see RxJS) and Tasks (which are similar to promises but concern computations rather than results - can start/cancel/stop the computation).
 
-```
-const wait = time => new Promise((resolve) => setTimeout(resolve, time));
+**Examples**
 
-wait(3000).then(() => console.log('Hello!')); // 'Hello!'
+The basic pattern for using promises is:
+
+```js
+const executorFunction = (resolve, reject) => {
+  if (promise_kept) {
+    resolve('Success');
+  } else {
+    reject(new Error('Failed'));
+  }
+}
+
+const handleFulfilledFunction1 = (result) => {
+  console.log(result);
+  return result;
+}
+
+const handleRejectedFunction = (reason) => {
+  console.log(reason);
+  throw -999;
+}
+
+const handledErrorFunction = (reason) => {
+  if (reason === -999) {
+    // error handled previously in chain
+  } else {
+    // handle error
+  }
+}
+
+const finalizeFunction = (info) => {
+  // clean-up
+}
+
+(new Promise(executorFunction))
+  .then(handleFulfilledFunction1,handleRejectedFunction)
+  .then(handleFulfilledFunction2)
+  .then(handleFulfilledFunction3)
+  .catch(handleErrorFunction)
+  .finally(handleFinalizeFunction);
 ```
 
-All promises supply a `.then()` method, which returns a new promise:
+Note that if `handleRejectedFunction` is not specified, a default handler will be used that simply passes the rejection to the next promise in the chain.
 
+A more concrete example is:
+
+```js
+// threshold to cause errors
+const THRESHOLD_A = 8; // always fails if 0
+
+// the resolve and reject values are passed in from
+// the .then() function.  reject is optional.
+let promise = new Promise(function (resolve, reject) {
+  // get 'random' number
+  const randomInt = Date.now();
+
+  // find the remainder
+  const value = randomInt % 10;
+
+  // check if value is within range
+  promise_kept = value < THRESHOLD_A;
+
+  if (promise_kept) {
+    // check if number is odd or even
+    const isOdd = value % 2 ? true : false;
+
+    // pass result to next step of chain
+    resolve({ theNumber: value, isOdd: isOdd });
+  } else {
+    // return error
+    reject(new Error('value exceeded threshold'));
+  }
+});
+
+// resolve(any)
+// can only pass a single object
+const getValidNumber = (result) => {
+  console.log(`Success!: ${result.theNumber}`);
+
+  // value will be passed to next promise in chain
+  return result;
+};
+
+// resolve(any)
+// can only pass a single object
+function checkParity(result) {
+  // The "testForOdd()" function gets "result" as closure variable.
+  var testForOdd = function (resolve, reject) {
+    const theNumber = result.theNumber;
+    const isOdd = result.isOdd;
+    
+    if (isOdd) {
+      reject(`Number is odd: ${theNumber}`);
+    } else {
+      resolve(result);
+    }
+    return;
+  };
+  return new Promise(testForOdd);
+}
+
+// reject(any)
+// can only pass a single object
+const handleRejected = (reason) => {
+  console.log(`Failed!: ${reason}`);
+  throw -999; // must "throw" something, to maintain error state down the chain
+};
+
+// if the rejection handler is not specified, a default
+// handler is used which simply passes the error to the
+// next promise in the chain.
+promise
+  .then(getValidNumber, handleRejected)
+  .then(checkParity)
+  .then((info) => {
+    console.log(info);
+    return info;
+  })
+  // any unhandled errors or rejections are passed to .catch()
+  // note that any errors that occur in catch will not be
+  // handled
+  .catch((reason) => {
+    if (reason === -999) {
+      console.error('Had previously handled error');
+    } else {
+      console.error(`Whoops: ${reason}`);
+    }
+  })
+  // this is the last chance to handle any failure states
+  .finally((info) => console.log('All done'));
 ```
-promise.then(
-  onFulfilled?: Function,
-  onRejected?: Function
-) => Promise
+
+**Triggering a Promise Immediately**
+
+In practice, an executor usually does something asynchronously and calls resolve/reject after some time, but it doesn’t have to. It is also possible to call resolve or reject immediately, like this:
+
+```jsx
+let promise = new Promise(function(resolve, reject) {
+  // not taking time to do the job
+  resolve(123); // immediately give the result: 123
+});
 ```
+
+For instance, this might happen when a job is started however it is then seen that everything has already been completed and cached.
+
+Along the same lines, the `resolve()` and `reject()` functions can be accessed statically to achieve the same result:
+
+```jsx
+var p1 = new Promise( function(resolve,reject){
+    reject( "Oops" );
+} );
+
+// is equivalent to:
+
+var p2 = Promise.reject( "Oops" );
+```
+
 </div>
 </div>
 
