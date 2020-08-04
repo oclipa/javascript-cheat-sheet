@@ -2303,36 +2303,40 @@ This can be used in the following manner:
 </div>
 
 <div id="generators">
-<button type="button" class="collapsible">+ Generators</button>   
+<button type="button" class="collapsible">+ Generators (function*/yield)</button>   
 <div class="content" style="display: none;" markdown="1">
 
-A Generator is a special function that is defined using the `function*` (note that `*`) and `yield` syntax, and exposes the `next()` method.
+A generator is a special function that is defined using the `function*` (note that `*`) and `yield` syntax, and exposes the `next()` method.
 
-Although this is most commonly used to simplify creating an iterator, the main power of the function comes from the ability to be paused and resumed using the `yield` keyword.
+Note: it is not possible to use arrow notation when defining a generator.
+
+Although this is most commonly used to simplify creating an iterator, the main power of the function comes from the ability to pause and resume commands using the `yield` keyword.
 
 For example, in the most familiar case, an iterator function may be implemented in the following manner:
 
 ```js
-function* idMaker () {
+function* numMaker () {
   let id = 0
   while (true) { yield id++ }
 }
+
+// need to assign generator to a variable to make it iterable
+let gen = numMaker()
 ```
 
 This can then either be accessed using a for-of loop:
 
 ```js
-for (const i of gen) {
+for (const i of numMaker()) {
   if (i > 100)
     break;
   console.log(`id: ${i}`);
 }
 ```
 
-or the individual yielded values can be accessed sequentially using ther `next()` function:
+or the individual yielded values can be accessed sequentially using the `next()` function:
 
 ```js
-let gen = idMaker()
 gen.next().value  // → 0
 gen.next().value  // → 1
 gen.next().value  // → 2
