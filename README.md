@@ -1758,7 +1758,7 @@ Differences:
 </div>
 
 <div id="getset">
-<button type="button" class="collapsible">+ Getters & Setters (const Obj = { get func() { return }, set func(val) {} })</button>   
+<button type="button" class="collapsible">+ Getters &amp; Setters: <em>const Obj = { get func() { return }, set func(val) {} }</em></button>   
 <div class="content" style="display: none;" markdown="1">
 
 ```js
@@ -2489,7 +2489,7 @@ for (var i=0; i < 10; i++;) {/*actions*/} // SyntaxError
 <div class="content" style="display: none;" markdown="1">
   
 Data Types:
-primitives & objects
+primitives &amp; objects
 Primitives: number, object, string, boolean
 Objects: Number, String, Function, Object, Array
 Type Coercion: process of converting value from one type to another (e.g. string -> number, object -> boolean, etc.)
@@ -2528,13 +2528,13 @@ Scope inherits from parent to child.
 Mixin:
 interceptorMixin(authMixin(HttpClass))
 
-let & const honour block level scope; var does not
+let &amp; const honour block level scope; var does not
 
 </div>
 </div>
 
 <div id="polyfill">
-<button type="button" class="collapsible">+ Shims & Polyfills</button>   
+<button type="button" class="collapsible">+ Shims &amp; Polyfills</button>   
 <div class="content" style="display: none;" markdown="1">
 
 A shim is a library that brings a new API to an older environment, using on the means of that environment.
