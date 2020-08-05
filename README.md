@@ -2323,6 +2323,8 @@ Note: it is not possible to use arrow notation when defining a generator.
 
 The `yield` keyword returns an `IteratorResult` object with two properties: `value` and `done`.
 
+The `next()` function can accept a single value (e.g. `iter.next(5)`).  This value is assigned as the output of the `yield` keyword, regardless of what the true output is.
+
 For example, in the most familiar case, an iterator function may be implemented in the following manner:
 
 ```js
@@ -2371,31 +2373,75 @@ console.log(generate.next().value); // undefined
 
 The following is a crude example of emulating an async/await function using a generator:
 
+*shared code*
+
+```js
+// return a Promise that simulates some long-running process
+function timeout(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+// when the timer expires, return a 'random' number
+const getData = async () => {
+  await timeout(3000);
+  return Date.now();
+};
+```
+
 *async/await version*
 
 ```js
-async function async-await() {
-  let a=await(task1);
-  console.log(a);
-  let b=await(task2);
-  console.log(b);
-  let c=await(task3);
-  console.log(c);
-}
+// get the Promise from the long-running process
+const promise = getData();
+
+// when the Promise resolves, use the result
+promise.then((result) => {
+  console.log('Resolved Promise:', result);
+});
 ```
 
 *generator version*
 
 ```js
-function * generator-promise() {
-  let a=yield Promise1();
-  console.log(a);
-  let b=yield Promise1();
-  console.log(b);
-  let c=yield Promise1();
-  console.log(c);
+// generator provides two resume points
+function* generator() {
+  let a = yield getData();
+  yield a
+    ? Promise.resolve(a)
+    : getData();
+  
+  // if next() is called a 3rd time, exit
+  return;
 }
+
+// assign the generator to a variable so that it
+// can be iterated over
+const iterator = generator();
+
+// process first yield statement
+const iteration = iterator.next();
+
+// wait until Promise (.value) is resolved
+// then use the result
+iteration.value.then((resolvedValue) => {
+  console.log('Resolved Promise:', resolvedValue);
+
+  // process next yield statement, but this time
+  // pass in a value that will get assigned to 'a'
+  const nextIteration = iterator.next(resolvedValue + 10);
+
+  // wait until Promise (.value) is resolved
+  // then use the result
+  nextIteration.value.then((resolvedValue) => {
+    console.log('Resolved Promise:', resolvedValue);
+  });
+});
 ```
+
+**Further Information**
+
+* [A Simple Guide to Understanding Javascript (ES6) Generators](https://medium.com/dailyjs/a-simple-guide-to-understanding-javascript-es6-generators-d1c350551950)
+* [Yield! Yield! How Generators work in JavaScript](https://www.freecodecamp.org/news/yield-yield-how-generators-work-in-javascript-3086742684fc/)
 
 </div>
 </div>
