@@ -1051,6 +1051,48 @@ var p1 = new Promise( function(resolve,reject){
 var p2 = Promise.reject( "Oops" );
 ```
 
+**Making async/await parallel: Promise.all()**
+
+To quote from MDN:
+
+> The Promise.all() method returns a single Promise that resolves when all of the promises passed as an iterable have resolved or when the iterable contains no promises. It rejects with the reason of the first promise that rejects.
+
+e.g.:
+
+```js
+async function sequence() {
+    await Promise.all([promise1(), promise2()]);  
+    return "done!";
+}
+```
+
+An alternative approach is:
+
+```js
+function timeout(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function parallel() {
+  console.log(Date.now());
+
+  // Start a 500ms timer asynchronously…
+  const wait1 = timeout(500); 
+  // …meaning this 50ms timer happens in parallel.
+  const wait2 = timeout(50); 
+
+  // Wait 500ms for the first timer…
+  await wait1;
+  console.log(Date.now());
+  
+  // …by which time this timer has already finished.
+  await wait2; 
+  console.log(Date.now());
+}
+
+parallel();
+```
+
 </div>
 </div>
 
@@ -2371,71 +2413,134 @@ console.log(generate.next().value); // 60
 console.log(generate.next().value); // undefined
 ```
 
-The following is a crude example of emulating an async/await function using a generator:
+Generators can be used with Promises to emulate async/await functionality (actually, async/await uses similar logic under the hood).  The following is a crude example of this:
 
 *shared code*
 
 ```js
-// return a Promise that simulates some long-running process
+// function to simulate a long-running process
 function timeout(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-// when the timer expires, return a 'random' number
-const getData = async () => {
+// returns a Promise that will return a 'random'
+// number after 3 seconds
+const getPromise = async () => {
+  // returns pending promise
   await timeout(3000);
+  // returns when promise resolved
   return Date.now();
 };
+
+const getData = (overriddenValue) => {
+  return overriddenValue ? Promise.resolve(overriddenValue) : getPromise();
+};
+
+const logData = (test, iter, data) => {
+  const timestamp = Date.now();
+  const delta = timestamp - data;
+  console.log(`${timestamp} - (${test}) Resolved Promise ${iter}: ${data} (delta: ${delta})`);
+};
+
+const timestamp = Date.now();
+console.log(`${timestamp} - start`);
 ```
 
 *async/await version*
 
 ```js
-// get the Promise from the long-running process
-const promise = getData();
+// get Promise for expected data
+// when Promise is resolved, use the resolved value.
+getData().then((resolvedValue) => {
+  logData('await', "a", resolvedValue);
 
-// when the Promise resolves, use the result
-promise.then((result) => {
-  console.log('Resolved Promise:', result);
+  // get Promise for expected data
+  // when Promise is resolved, use the resolved value.
+  getData().then((resolvedValue) => {
+    logData('await', "b", resolvedValue);
+
+    // override expected data
+    // Promise will be instantly resolved.
+    const overriddenValue = resolvedValue + 100;
+    getData(overriddenValue).then((resolvedValue) => {
+      logData('await', "c", resolvedValue);
+    });    
+  });
 });
 ```
 
 *generator version*
 
 ```js
-// generator provides two resume points
+// incrementally returns Promises for each yield statement
+// each time next() is called
 function* generator() {
+  // first IterationResult: returns pending Promise
+  // for the expected data
   let a = yield getData();
-  yield a
-    ? Promise.resolve(a)
-    : getData();
-  
-  // if next() is called a 3rd time, exit
-  return;
+
+  // second IterationResult: if a value was passed in via next,
+  // immediately return a resolved Promise with that value.
+  // If nothing was passed via next, return a pending Promise
+  // for the expected data
+  let b = yield getData(a);
+
+  // third IterationResult: if a value was passed in via next,
+  // immediately return a resolved Promise with that value.
+  // If nothing was passed via next, return a pending Promise
+  // for the expected data
+  yield getData(b);
 }
 
-// assign the generator to a variable so that it
-// can be iterated over
-const iterator = generator();
+// assign Generator to variable so that it can be iterated
+const gen = generator();
 
-// process first yield statement
-const iteration = iterator.next();
-
-// wait until Promise (.value) is resolved
-// then use the result
-iteration.value.then((resolvedValue) => {
-  console.log('Resolved Promise:', resolvedValue);
-
-  // process next yield statement, but this time
-  // pass in a value that will get assigned to 'a'
-  const nextIteration = iterator.next(resolvedValue + 10);
-
-  // wait until Promise (.value) is resolved
-  // then use the result
-  nextIteration.value.then((resolvedValue) => {
-    console.log('Resolved Promise:', resolvedValue);
+// get Promise for expected data
+// when Promise is resolved, use the resolved value.
+gen.next().value.then((resolvedValue) => {
+  logData('yield', 1, resolvedValue);
+  
+  // get Promise for expected data
+  // when Promise is resolved, use the resolved value.
+  gen.next().value.then((resolvedValue) => {
+    logData('yield', 2, resolvedValue);
+    
+    // override expected data
+    // Promise will be instantly resolved.
+    const overriddenValue = resolvedValue + 10;
+    gen.next(overriddenValue).value.then((resolvedValue) => {
+      logData('yield', 3, resolvedValue);
+    });
   });
 });
+```
+
+**yield\***
+
+The `yield*` keyword can be used to embed a generator inside another generator:
+
+```jsx
+function* g1() {
+  yield 2;
+  yield 3;
+  yield 4;
+}
+
+function* g2() {
+  yield 1;
+  yield* gl();
+  yield 5;
+}
+
+var iterator = g2();
+
+console.log(iterator.next()); // {value: 1, done: false}
+console.log(iterator.next()); // {value: 2, done: false}
+console.log(iterator.next()); // {value: 3, done: false}
+console.log(iterator.next()); // {value: 4, done: false}
+console.log(iterator.next()); // {value: 5, done: false}
+console.log(iterator.next()); // {value: undefined, done: true}
+
 ```
 
 **Further Information**
