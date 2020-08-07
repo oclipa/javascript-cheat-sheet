@@ -17,7 +17,11 @@ Javascript is what is termed a multi-paradigm language, which means that it supp
    * Functional Programming
 
 <div id="pi">
-  <button type="button" class="collapsible">+ Prototypal Inheritance: <br/><span class="ex"> Obj.prototype </span></button>   
+  <button type="button" class="collapsible">+ Prototypal Inheritance: <br/>
+    <code class="ex">
+      Obj.prototype
+    </code>
+  </button>   
 <div class="content" style="display: none;" markdown="1">
 
 * Objects without classes.
@@ -106,7 +110,7 @@ myWiderOptions = Object.assign(
 </div>
 
 <div id="fp">
-<button type="button" class="collapsible">+ Functional Programming: <br/><span class="ex"> f(g(x)) </span></button>   
+<button type="button" class="collapsible">+ Functional Programming: <br/><code class="ex"> f(g(x)) </code></button>   
 <div class="content" style="display: none;" markdown="1">
 
 At it's core, functional programming is based on the four main principles:
@@ -225,7 +229,7 @@ These features are typically enabled by combining **lambdas** (abstractions that
 </div>
 
 <div id="purefunc">
-<button type="button" class="collapsible">+ Pure Functions: <br/><span class="ex">no side-effects</span></button>   
+<button type="button" class="collapsible">+ Pure Functions: <br/><code class="ex">no side-effects</code></button>   
 <div class="content" style="display: none;" markdown="1">
 
 A pure function is one that:
@@ -245,7 +249,7 @@ In an ideal world, an application would be composed entirely of pure functions. 
 </div>
 
 <div id="lambda">
-<button type="button" class="collapsible">+ Lambdas: <br/><span class="ex">functions treated as data</span></button>   
+<button type="button" class="collapsible">+ Lambdas: <br/><code class="ex">functions treated as data</code></button>   
 <div class="content" style="display: none;" markdown="1">
 
 Lambda expressions are abstractions that enable a function to be passed around like data.  In other languages that support them, lambda expressions are normally identified by arrow notation (`=>`), but this is not the case in Javascript.
