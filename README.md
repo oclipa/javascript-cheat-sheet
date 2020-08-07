@@ -17,7 +17,7 @@ Javascript is what is termed a multi-paradigm language, which means that it supp
    * Functional Programming
 
 <div id="pi">
-  <button type="button" class="collapsible">+ Prototypal Inheritance: <em> Obj.prototype </em></button>   
+  <button type="button" class="collapsible">+ Prototypal Inheritance: <em class="ex"> Obj.prototype </em></button>   
 <div class="content" style="display: none;" markdown="1">
 
 * Objects without classes.
