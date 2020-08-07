@@ -258,7 +258,17 @@ In summary: Lambda means "function used as data".
 </div>
 
 <div id="closures">
-<button type="button" class="collapsible">+ Closures: <br/><span class="ex"> const func = () => { const closure = (v) => { return v; } const i = 0; return closure(i); } </span></button>   
+<button type="button" class="collapsible">+ Closures: <br/>
+  <span class="ex">
+    const func = () => { 
+      const closure = (v) => { 
+        return v; 
+      } 
+      const i = 0; 
+      return closure(i); 
+    } 
+  </span>
+</button>   
 <div class="content" style="display: none;" markdown="1">
 
 A more in-depth discussion of closures is given [here](https://oclipa.github.io/csharp-cheat-sheet/#closures?expand) (in the context of C#, but the general principles apply to Javascript).  
@@ -879,7 +889,14 @@ Asynchronous programming is much better suited to UIs, or applications that depe
 </div>
 
 <div id="promise">
-<button type="button" class="collapsible">+ Promises: <br/><span class="ex"> (new Promise(executor)).then(resolved,rejected).catch(onError).finally(finalize); </span></button>   
+<button type="button" class="collapsible">+ Promises: <br/>
+  <span class="ex">
+    (new Promise(executor))
+      .then(resolved,rejected)
+      .catch(onError)
+      .finally(finalize); 
+  </span>
+</button>   
 <div class="content" style="display: none;" markdown="1">
 
 A promise is an object that may produce a single value at some time in the future.  This could be a resolved value, or a reason why it was not resolved.
@@ -1800,7 +1817,14 @@ Differences:
 </div>
 
 <div id="getset">
-<button type="button" class="collapsible">+ Getters &amp; Setters: <br/><span class="ex">const Obj = { get func() { return }, set func(val) {} }</span></button>   
+<button type="button" class="collapsible">+ Getters &amp; Setters: <br/>
+  <span class="ex">
+    const Obj = { 
+      get func() { return }, 
+      set func(val) {} 
+    }
+  </span>
+</button>   
 <div class="content" style="display: none;" markdown="1">
 
 ```js
