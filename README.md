@@ -2649,6 +2649,77 @@ for (var i=0; i < 10; i++;) {/*actions*/} // SyntaxError
 </div>
 </div>
 
+<div id="try-catch">
+<button type="button" class="collapsible">+ Exceptions &amp; Try/Catch: <br/><code class="ex">
+function MyException(message, metadata) {
+  const error = new Error(message);
+  error.code = "CUSTOM_ERROR_CODE";
+  error.metadata = metadata;  
+  return error;
+}
+MyException.prototype = Object.create(Error.prototype);
+</code></button>   
+<div class="content" style="display: none;" markdown="1">
+
+This is basically the same as C# and Java:
+
+```js
+function KilledException(message, metadata) {
+  const error = new Error(message);
+
+  // code can be overridden
+  error.code = "THIS_IS_A_CUSTOM_ERROR_CODE";
+  
+  // can also add additional properties
+  error.metadata = metadata;
+  
+  return error;
+}
+
+KilledException.prototype = Object.create(Error.prototype);
+```
+
+```js
+try {
+  tryCode - Block of code to try
+  
+  // simplest case
+  // throw "You died!";
+  
+  // better case
+  //throw new Error("You died");
+  
+  // best case
+  throw new KilledException("You died", { who: "Colonel Mustard", where: "Study", with: "Candlestick" } )
+}
+catch(err) {
+  catchCode - Block of code to handle errors
+  // to show details: err.message
+  // to rethrow: throw err
+}
+finally {
+  finallyCode - Block of code to be executed regardless of the try / catch result
+}
+```
+
+&nbsp;
+
+An OOP class-based alternative to the functional exception above would be:
+
+```js
+class KilledException extends Error {
+  constructor(message, metadata) {
+    super(message);
+    this.name = 'KILLED_ERROR';
+    this.code = "THIS_IS_A_CUSTOM_ERROR_CODE";
+    this.metadata = metadata;  
+  }
+}
+```
+
+</div>
+</div>
+
 <div id="data-types">
 <button type="button" class="collapsible">+ To Be Written Up</button>   
 <div class="content" style="display: none;" markdown="1">
@@ -2739,69 +2810,6 @@ class Runner {
 *NOTE*: Be careful not to overwrite existing functionality!
 </div>
 </div>
-
-</div>
-</div>
-
-<div id="try-catch">
-<button type="button" class="collapsible">+ Exceptions &amp; Try/Catch</button>   
-<div class="content" style="display: none;" markdown="1">
-
-This is basically the same as C# and Java:
-
-```js
-function KilledException(message, metadata) {
-  const error = new Error(message);
-
-  // code can be overridden
-  error.code = "THIS_IS_A_CUSTOM_ERROR_CODE";
-  
-  // can also add additional properties
-  error.metadata = metadata;
-  
-  return error;
-}
-
-KilledException.prototype = Object.create(Error.prototype);
-```
-
-```js
-try {
-  tryCode - Block of code to try
-  
-  // simplest case
-  // throw "You died!";
-  
-  // better case
-  //throw new Error("You died");
-  
-  // best case
-  throw new KilledException("You died", { who: "Colonel Mustard", where: "Study", with: "Candlestick" } )
-}
-catch(err) {
-  catchCode - Block of code to handle errors
-  // to show details: err.message
-  // to rethrow: throw err
-}
-finally {
-  finallyCode - Block of code to be executed regardless of the try / catch result
-}
-```
-
-&nbsp;
-
-An OOP class-based alternative to the functional exception above would be:
-
-```js
-class KilledException extends Error {
-  constructor(message, metadata) {
-    super(message);
-    this.name = 'KILLED_ERROR';
-    this.code = "THIS_IS_A_CUSTOM_ERROR_CODE";
-    this.metadata = metadata;  
-  }
-}
-```
 
 </div>
 </div>
