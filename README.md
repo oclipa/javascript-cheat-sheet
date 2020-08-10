@@ -17,11 +17,7 @@ Javascript is what is termed a multi-paradigm language, which means that it supp
    * Functional Programming
 
 <div id="pi">
-  <button type="button" class="collapsible">+ Prototypal Inheritance: <br/>
-    <code class="ex">
-      Obj.prototype
-    </code>
-  </button>   
+  <button type="button" class="collapsible">+ Prototypal Inheritance: <br/><code class="ex">Obj.prototype</code></button>   
 <div class="content" style="display: none;" markdown="1">
 
 * Objects without classes.
@@ -110,7 +106,7 @@ myWiderOptions = Object.assign(
 </div>
 
 <div id="fp">
-<button type="button" class="collapsible">+ Functional Programming: <br/><code class="ex"> f(g(x)) </code></button>   
+<button type="button" class="collapsible">+ Functional Programming: <br/><code class="ex">f(g(x))</code></button>   
 <div class="content" style="display: none;" markdown="1">
 
 At it's core, functional programming is based on the four main principles:
@@ -262,17 +258,15 @@ In summary: Lambda means "function used as data".
 </div>
 
 <div id="closures">
-<button type="button" class="collapsible">+ Closures: <br/>
-  <code class="ex">
-    const func = () => { 
-      const closure = (v) => { 
-        return v; 
-      } 
-      const i = 0; 
-      return closure(i); 
-    } 
-  </code>
-</button>   
+<button type="button" class="collapsible">+ Closures: <br/><code class="ex">
+const func = () => { 
+  const closure = (v) => { 
+    return v; 
+  } 
+  const i = 0; 
+  return closure(i); 
+} 
+</code></button>   
 <div class="content" style="display: none;" markdown="1">
 
 A more in-depth discussion of closures is given [here](https://oclipa.github.io/csharp-cheat-sheet/#closures?expand) (in the context of C#, but the general principles apply to Javascript).  
@@ -893,14 +887,12 @@ Asynchronous programming is much better suited to UIs, or applications that depe
 </div>
 
 <div id="promise">
-<button type="button" class="collapsible">+ Promises: <br/>
-  <code class="ex">
-    (new Promise(executor))
-      .then(resolved,rejected)
-      .catch(onError)
-      .finally(finalize); 
-  </code>
-</button>   
+<button type="button" class="collapsible">+ Promises: <br/><code class="ex">
+(new Promise(executor))
+  .then(resolved,rejected)
+  .catch(onError)
+  .finally(finalize); 
+</code></button>   
 <div class="content" style="display: none;" markdown="1">
 
 A promise is an object that may produce a single value at some time in the future.  This could be a resolved value, or a reason why it was not resolved.
@@ -1145,7 +1137,7 @@ After installing NodeJS, it is recommended to also install the following package
 </div>
 
 <div id="simple-cmd-app">
-<button type="button" class="collapsible">+ A Simple Command-Line App: <br/><code class="ex"> node app.js --a=x --b=y </code></button>   
+<button type="button" class="collapsible">+ A Simple Command-Line App: <br/><code class="ex">node app.js --a=x --b=y</code></button>   
 <div class="content" style="display: none;" markdown="1">
   
 NodeJs must be installed in order to run javascript on the command line.
@@ -1230,7 +1222,7 @@ There is much more that `yargs` enables; see the following for further informati
 </div>
 
 <div id="simple-web-app">
-<button type="button" class="collapsible">+ A Simple Web App: <br/><code class="ex"> python -m http.server 8000 </code></button>   
+<button type="button" class="collapsible">+ A Simple Web App: <br/><code class="ex">python -m http.server 8000</code></button>   
 <div class="content" style="display: none;" markdown="1">
 
 To start a simple web server for testing javascript web apps, install the `http-server` package from npm: 
@@ -1629,7 +1621,7 @@ console.log(mouse.describe());
 </div>
 
 <div id="defaults">
-<button type="button" class="collapsible">+ Default Values: <br/><code class="ex"> [a = defA, b = defB], ({ val = defV } = {}) => { } </code></button>   
+<button type="button" class="collapsible">+ Default Values: <br/><code class="ex">[a = defA, b = defB], ({ val = defV } = {}) => { }</code></button>   
 <div class="content" style="display: none;" markdown="1">
 
 Default array values:
@@ -1746,7 +1738,7 @@ For those coming from languages such as C#, it may be useful to think of functio
 </div>
 
 <div id="iife">
-<button type="button" class="collapsible">+ Immediately-Invoked Function Expressions (IIFE): <br/><code class="ex"> (() => { })() </code></button>   
+<button type="button" class="collapsible">+ Immediately-Invoked Function Expressions (IIFE): <br/><code class="ex">(() => { })()</code></button>   
 <div class="content" style="display: none;" markdown="1">
 
 Immediately Invoked Function Expressions (a.k.a. Self-Executing Functions) are functions which are invoked immediately after being defined, i.e. they don't need to be explicitly called elsewhere in the code.
@@ -1779,7 +1771,7 @@ document.addEventListener('DOMContentLoaded', onDocumentLoad);
 </div>
 
 <div id="arrow">
-<button type="button" class="collapsible">+ Arrow Functions: <br/><code class="ex"> () => {func}, () => ({obj}) </code></button>   
+<button type="button" class="collapsible">+ Arrow Functions: <br/><code class="ex">() => {func}, () => ({obj})</code></button>   
 <div class="content" style="display: none;" markdown="1">
 
 "Traditional" Function (ES5):
@@ -1821,14 +1813,12 @@ Differences:
 </div>
 
 <div id="getset">
-<button type="button" class="collapsible">+ Getters &amp; Setters: <br/>
-  <code class="ex">
-    const Obj = { 
-      get func() { return }, 
-      set func(val) {} 
-    }
-  </code>
-</button>   
+<button type="button" class="collapsible">+ Getters &amp; Setters: <br/><code class="ex">
+const Obj = { 
+  get func() { return }, 
+  set func(val) {} 
+}
+</code></button>   
 <div class="content" style="display: none;" markdown="1">
 
 ```js
@@ -2263,7 +2253,7 @@ Further information regarding template literals can be found here:
 </div>
 
 <div id="convertStringToProp">
-<button type="button" class="collapsible">+ Converting a String to a Property Name: <br/><code class="ex"> myObj["foo.Bar"] </code></button>   
+<button type="button" class="collapsible">+ Converting a String to a Property Name: <br/><code class="ex">myObj["foo.Bar"]</code></button>   
 <div class="content" style="display: none;" markdown="1">
 
 The ability to convert a string to a property name is known as "square bracket" notation.  
@@ -2311,7 +2301,7 @@ var foo = myResponse["foo.Bar"]; // correct syntax
 </div>
 
 <div id="convertStringTONum">
-<button type="button" class="collapsible">+ Converting a String to a Number: <br/><code class="ex"> +, *1 </code></button>   
+<button type="button" class="collapsible">+ Converting a String to a Number: <br/><code class="ex">+, *1</code></button>   
 <div class="content" style="display: none;" markdown="1">
 
 Further information: [https://stackabuse.com/javascript-convert-string-to-number/](https://stackabuse.com/javascript-convert-string-to-number/)
@@ -2384,7 +2374,7 @@ This can be used in the following manner:
 </div>
 
 <div id="generators">
-<button type="button" class="collapsible">+ Generators: <br/><code class="ex"> function*, yield, next() </code></button>   
+<button type="button" class="collapsible">+ Generators: <br/><code class="ex">function*, yield, next()</code></button>   
 <div class="content" style="display: none;" markdown="1">
 
 A generator is a special function that is defined using the `function*` (note that `*`) and `yield` syntax, and exposes the `next()` method.  The difference between this and a normal function is that a generator function can be paused (using `yield`) and resumed (using `next()`).  These functions are most commonly used to simplify iterators, however they are not limited to this.
