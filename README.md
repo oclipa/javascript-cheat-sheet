@@ -527,7 +527,7 @@ The ability for a curry to encapsulate an asynchronous function and return the r
 </div>
 
 <div id="hof">
-<button type="button" class="collapsible">+ Higher Order Functions</button>   
+<button type="button" class="collapsible">+ Higher Order Functions: <br/><code class="ex">functions that add functionality to other functions, or compose functionality from several functions</code></button>   
 <div class="content" style="display: none;" markdown="1">
 
 Higher Order Functions are fundamental to the way Javascript works.  Essentially they allow functions to be composed together, to return another function. 
@@ -1339,18 +1339,17 @@ export const pi = 3.14159
 </div>
 
 <div id="createobj">
-<button type="button" class="collapsible">+ Creating An Object</button>   
+<button type="button" class="collapsible">+ Creating An Object<code class="ex">
+Using an Object Literal: let obj = { }
+Using Object.create()/.assign(): create from prototype or assign properties from source instance
+Using a Factory Function: wrapping create/assign in a function.
+Using Prototypal Inheritance: obj.prototype
+Using Classes: class SubX extends BaseX { constructor(c, d, e) { super(c, d); this.p3 = e; }
+}
+</code></button>
 <div class="content" style="display: none;" markdown="1">
 
-There are several approaches to creating objects in Javascript.
-
-   * Using an Object Literal.
-   * Using Object.create().
-   * Using a Factory Function.
-   * Using Prototypal Inheritance.
-   * Using Classes.
-
-As a general rule of thumb, Prototypal Inheritance and Classes should be avoided, since these create problems for functional programming.
+There are several approaches to creating objects in Javascript (as shown above).  As a general rule of thumb, directly manipulating a prototype, or using classes, should be avoided, since these create problems for functional programming.
 
 &nbsp;
 
@@ -1674,7 +1673,7 @@ With the release of ES6, avoid using `var`.
 </div>
 
 <div id="function">
-<button type="button" class="collapsible">+ Function Syntax</button>   
+<button type="button" class="collapsible">+ Function Syntax: <br/><code class="ex">anonymous, named, arrow &amp; self-executing</code></button>   
 <div class="content" style="display: none;" markdown="1">
 
 ```js   
@@ -1697,7 +1696,7 @@ With the release of ES6, avoid using `var`.
         )
     };
     
-    // self-executing expression
+    // self-executing expression (a.k.a: Immediately-Invoked Function Expressions)
     (function() {
       statements
     })();
@@ -1712,7 +1711,7 @@ With the release of ES6, avoid using `var`.
 </div>
 
 <div id="methods">
-<button type="button" class="collapsible">+ Methods vs Functions</button>   
+<button type="button" class="collapsible">+ Methods vs Functions: <br/><code class="ex">function: f(x); method: g.f(x)</code></button>   
 <div class="content" style="display: none;" markdown="1">
 
 The difference between a method and a function (in javascript) is: 
@@ -2570,7 +2569,7 @@ console.log(iterator.next()); // {value: undefined, done: true}
 </div>
 
 <div id="semi">
-<button type="button" class="collapsible">+ Semi-Colons!</button>   
+<button type="button" class="collapsible">+ Semi-Colons!: <br/><code class="ex">use ESLint and Prettier and don't worry about it!</code></button>
 <div class="content" style="display: none;" markdown="1">
 
 Summarized from:
