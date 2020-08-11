@@ -3,7 +3,7 @@
 <a class="link" href="http://oclipa.github.io/toolbox.html">&lt; toolbox</a>
 </div> 
 
-## Javascript
+## JavaScript
 
 <button type="button" id="toggle-all" value="none">Expand All Sections </button>
 
@@ -11,7 +11,7 @@
 
 ## Paradigms
 
-Javascript is what is termed a multi-paradigm language, which means that it supports multiple different approaches to programming.  In particular it supports:
+JavaScript is what is termed a multi-paradigm language, which means that it supports multiple different approaches to programming.  In particular it supports:
 
    * Prototypal Inheritance
    * Functional Programming
@@ -55,7 +55,7 @@ Note that prototypal inheritance is **not the same as classical inheritance**.
          * Code can be harder to read.
          * Steeper learning curve (particularly if coming from an OO background; scoping!)
    
-Javascript does not support (true) classical inheritance.
+JavaScript does not support (true) classical inheritance.
 
 *It is difficult to identify any case where classical inheritance is more appropriate than prototypal inheritance!  The only case appears to be "if the language you are using depends on classical inheritance".*
 
@@ -248,9 +248,9 @@ In an ideal world, an application would be composed entirely of pure functions. 
 <button type="button" class="collapsible">+ Lambdas: <br/><code class="ex">functions treated as data</code></button>   
 <div class="content" style="display: none;" markdown="1">
 
-Lambda expressions are abstractions that enable a function to be passed around like data.  In other languages that support them, lambda expressions are normally identified by arrow notation (`=>`), but this is not the case in Javascript.
+Lambda expressions are abstractions that enable a function to be passed around like data.  In other languages that support them, lambda expressions are normally identified by arrow notation (`=>`), but this is not the case in JavaScript.
 
-In Javascript, it is common for 'lambda expression' to be reserved for anonymous functions, but this is not strictly true.  It is perfectly possible for a named function to a lambda expression *as long as it is passed into another function and treated as data*.   In addition, it is perfectly possible for an anonymous functions to not be a lambda expression *if it is not passed into another function*.  An example of this latter case would be a Self-Executing Function.
+In JavaScript, it is common for 'lambda expression' to be reserved for anonymous functions, but this is not strictly true.  It is perfectly possible for a named function to a lambda expression *as long as it is passed into another function and treated as data*.   In addition, it is perfectly possible for an anonymous functions to not be a lambda expression *if it is not passed into another function*.  An example of this latter case would be a Self-Executing Function.
 
 In summary: Lambda means "function used as data".
 
@@ -269,7 +269,7 @@ const func = () => {
 </code></button>   
 <div class="content" style="display: none;" markdown="1">
 
-A more in-depth discussion of closures is given [here](https://oclipa.github.io/csharp-cheat-sheet/#closures?expand) (in the context of C#, but the general principles apply to Javascript).  
+A more in-depth discussion of closures is given [here](https://oclipa.github.io/csharp-cheat-sheet/#closures?expand) (in the context of C#, but the general principles apply to JavaScript).  
 
 In summary, there are two basic use cases:
 1. Storing the state of data to be used in a particular method at a later time.
@@ -530,7 +530,7 @@ The ability for a curry to encapsulate an asynchronous function and return the r
 <button type="button" class="collapsible">+ Higher Order Functions: <br/><code class="ex">functions that add functionality to other functions, or compose functionality from several functions</code></button>   
 <div class="content" style="display: none;" markdown="1">
 
-Higher Order Functions are fundamental to the way Javascript works.  Essentially they allow functions to be composed together, to return another function. 
+Higher Order Functions are fundamental to the way JavaScript works.  Essentially they allow functions to be composed together, to return another function. 
 
 A Higher Order Function accepts one or more functions as arguments and returns another function.
 
@@ -586,7 +586,7 @@ Pros:
 Cons:
    * Can require more code.
 
-This is typically used in front-end frameworks, such as React, however the following is an example using vanilla javascript:
+This is typically used in front-end frameworks, such as React, however the following is an example using vanilla JavaScript:
 
 **Vanilla JS Example**
 
@@ -800,7 +800,7 @@ const Quote = (props) => {
     }, 2000);
 
     return () => {
-      clearTimeout(timer); // javascript built-in function
+      clearTimeout(timer); // JavaScript built-in function
     };
   });
 
@@ -881,7 +881,7 @@ Synchronous programming means that code is executed sequentially and will block 
 
 Asynchronous programming means that the engine runs in an event loop, from which operations are spawned.  If an operation takes a long time, the loop continues running until a result is received.  Typically this is handled through events.
 
-Asynchronous programming is much better suited to UIs, or applications that depend on network interaction.  This is particularly relevant for web applications, which is why it is important for Javascript.
+Asynchronous programming is much better suited to UIs, or applications that depend on network interaction.  This is particularly relevant for web applications, which is why it is important for JavaScript.
 
 </div>
 </div>
@@ -1115,7 +1115,7 @@ parallel();
 <button type="button" class="collapsible">+ Installing NodeJS</button>   
 <div class="content" style="display: none;" markdown="1">
   
-NodeJS provides many tools that aid javascript development, not least of which is the npm package management tool.
+NodeJS provides many tools that aid JavaScript development, not least of which is the npm package management tool.
   
 To install NodeJS:
 * Either, download the installer from the NodeJS website: [https://nodejs.org](https://nodejs.org)
@@ -1140,14 +1140,14 @@ After installing NodeJS, it is recommended to also install the following package
 <button type="button" class="collapsible">+ A Simple Command-Line App: <br/><code class="ex">node app.js --a=x --b=y</code></button>   
 <div class="content" style="display: none;" markdown="1">
   
-NodeJs must be installed in order to run javascript on the command line.
+NodeJs must be installed in order to run JavaScript on the command line.
 
 Once installed, a script can be run using `node filename.js`, e.g.:
 
 *add.js*
 
 ```js
-// Simple Addition Function in Javascript 
+// Simple Addition Function in JavaScript 
 function add(a, b) { 
   return a+b 
 }
@@ -1225,7 +1225,7 @@ There is much more that `yargs` enables; see the following for further informati
 <button type="button" class="collapsible">+ A Simple Web App: <br/><code class="ex">python -m http.server 8000</code></button>   
 <div class="content" style="display: none;" markdown="1">
 
-To start a simple web server for testing javascript web apps, install the `http-server` package from npm: 
+To start a simple web server for testing JavaScript web apps, install the `http-server` package from npm: 
 * http-server: `npm install -g http-server`
 
 To start the web server, run the following command in the same folder as your `index.html` file:
@@ -1348,7 +1348,7 @@ Using Classes: class SubX extends BaseX { constructor(c, d, e) { super(c, d); th
 </code></button>
 <div class="content" style="display: none;" markdown="1">
 
-There are several approaches to creating objects in Javascript (as shown above).  As a general rule of thumb, directly manipulating a prototype, or using classes, should be avoided, since these create problems for functional programming.
+There are several approaches to creating objects in JavaScript (as shown above).  As a general rule of thumb, directly manipulating a prototype, or using classes, should be avoided, since these create problems for functional programming.
 
 &nbsp;
 
@@ -1356,7 +1356,7 @@ There are several approaches to creating objects in Javascript (as shown above).
 
 *Using an Object literal*
 
-This is the basic way to create an object in javascript.
+This is the basic way to create an object in JavaScript.
 
 ```js
 let X = { p1: a, p2: b, myMethod () { return `my method`; } }
@@ -1470,7 +1470,7 @@ let mickey = mouse();
 
 *Using Prototypal Inheritance*
 
-This is the core principle upon which inheritance in javascript is based.
+This is the core principle upon which inheritance in JavaScript is based.
 
 ```js
 function BaseX(a, b) 
@@ -1713,7 +1713,7 @@ With the release of ES6, avoid using `var`.
 <button type="button" class="collapsible">+ Methods vs Functions: <br/><code class="ex">function: f(x); method: g.f(x)</code></button>   
 <div class="content" style="display: none;" markdown="1">
 
-The difference between a method and a function (in javascript) is: 
+The difference between a method and a function (in JavaScript) is: 
    * functions are called in isolation (e.g. `someFunction()`)
    * methods are only called from other objects (e.g. `someObject.someFunction()`)
 
@@ -1745,7 +1745,7 @@ The general form is `(function(){ })();`.
    * The parentheses around the function are to ensure that the code within the function is contained in the private scope of the function.
    * The parentheses at the end of the function are what invokes the function.
    
-Common pattern to prevent collisions when importing multiple javascript files:
+Common pattern to prevent collisions when importing multiple JavaScript files:
 
 ```jsx
 (function () {
@@ -2561,7 +2561,7 @@ console.log(iterator.next()); // {value: undefined, done: true}
 
 **Further Information**
 
-* [A Simple Guide to Understanding Javascript (ES6) Generators](https://medium.com/dailyjs/a-simple-guide-to-understanding-javascript-es6-generators-d1c350551950)
+* [A Simple Guide to Understanding JavaScript (ES6) Generators](https://medium.com/dailyjs/a-simple-guide-to-understanding-javascript-es6-generators-d1c350551950)
 * [Yield! Yield! How Generators work in JavaScript](https://www.freecodecamp.org/news/yield-yield-how-generators-work-in-javascript-3086742684fc/)
 
 </div>
@@ -2645,7 +2645,7 @@ class KilledException extends Error {
 Summarized from:
 * [https://news.codecademy.com/your-guide-to-semicolons-in-javascript/](https://news.codecademy.com/your-guide-to-semicolons-in-javascript/).
 
-Javascript is pretty flexible when it comes to the presence (or lack) of semi-colons, but there are some pitfalls.  If you following these guidelines, you shouldn't encounter any issues:
+JavaScript is pretty flexible when it comes to the presence (or lack) of semi-colons, but there are some pitfalls.  If you following these guidelines, you shouldn't encounter any issues:
 
 **Required**
 
@@ -2777,7 +2777,7 @@ let &amp; const honour block level scope; var does not
 
 A shim is a library that brings a new API to an older environment, using on the means of that environment.
 
-A polyfill is a type of shim that retrofits legacy browsers with modern HTML5/CSS3 features, usually using Javascript or Flash.
+A polyfill is a type of shim that retrofits legacy browsers with modern HTML5/CSS3 features, usually using JavaScript or Flash.
 
 A polyfill is a property or function that is added to the prototype of an object
 
