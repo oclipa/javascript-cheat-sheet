@@ -1083,7 +1083,7 @@ An alternative approach is:
 
 ```js
 function timeout(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve.bind(null, "done!"), ms));
 }
 
 async function parallel() {
@@ -2436,7 +2436,7 @@ Generators can be used with Promises to emulate async/await functionality (actua
 ```js
 // function to simulate a long-running process
 function timeout(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve.bind(null, "done!"), ms));
 }
 
 // returns a Promise that will return a 'random'
