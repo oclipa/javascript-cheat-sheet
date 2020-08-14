@@ -2383,6 +2383,8 @@ The `yield` keyword returns an `IteratorResult` object with two properties: `val
 
 The `next()` function can accept a single value (e.g. `iter.next(5)`).  This value is assigned as the output of the `yield` keyword, regardless of what the true output is.
 
+**Simple Example**
+
 For example, in the most familiar case, an iterator function may be implemented in the following manner:
 
 ```js
@@ -2413,6 +2415,8 @@ gen.next().value  // → 1
 gen.next().value  // → 2
 ```
 
+**Multiple yield Statements**
+
 A possibly less familiar use case is to use multiple `yield` statements in a function, to perform several tasks in sequence:
 
 ```js
@@ -2428,6 +2432,47 @@ console.log(generate.next().value); // 52
 console.log(generate.next().value); // 60
 console.log(generate.next().value); // undefined
 ```
+
+**yield Sequencing*
+
+The sequence in which values are yielded from a generator can be confusing.  Take the following example:
+
+```js
+function* logGenerator() {
+  console.log(0);
+  console.log(1, yield 10);
+  console.log(2, yield 20);
+  console.log(3, yield 30);
+}
+
+var gen = logGenerator();
+
+console.log("call 1 yielded", gen.next().value); // 0
+console.log("call 2 yielded", gen.next('pretzel').value); // 1 pretzel
+console.log("call 3 yielded", gen.next('california').value); // 2 california
+console.log("call 4 yielded", gen.next('mayonnaise').value); // 3 mayonnaise
+```
+
+The output from this will be the following:
+
+```
+0
+call 1 yielded 10
+1 pretzel
+call 2 yielded 20
+2 california
+call 3 yielded 30
+3 mayonnaise
+call 4 yielded undefined
+```
+
+The first time you call the generator it executes `console.log(0);` and then starts executing `console.log(1, yield 10)`. But when it gets to the `yield` expression, `next()` returns that value, before actually calling `console.log()`.
+
+The next time you call the generator, it resumes where it left off, which is constructing the arguments to `console.log()`. The `yield 10` expression is replaced with the argument to `next()`, so it executes `console.log(1, 'pretzel')`.
+
+Then it starts executing `console.log(2, yield 20)`, and the same thing happens -- it yields 20 before calling `console.log()`.
+
+**Emulating async/await**
 
 Generators can be used with Promises to emulate async/await functionality (actually, async/await uses similar logic under the hood).  The following is a crude example of this:
 
