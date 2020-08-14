@@ -2433,7 +2433,7 @@ console.log(generate.next().value); // 60
 console.log(generate.next().value); // undefined
 ```
 
-**yield Sequencing*
+**yield Sequencing**
 
 The sequence in which values are yielded from a generator can be confusing.  Take the following example:
 
