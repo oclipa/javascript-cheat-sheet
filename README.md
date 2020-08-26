@@ -1910,7 +1910,7 @@ function sortArgs(...args) {
 </div>
 
 <div id="destruct">
-<button type="button" class="collapsible">+ Destructuring: <br/><code class="ex">[a, b] = [x, y]</code></button>   
+<button type="button" class="collapsible">+ Destructuring: <br/><code class="ex">[a, b] = [x, y] or { a, b } = { x, y }</code></button>   
 <div class="content" style="display: none;" markdown="1">
 
 The [destructuring assignment](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) syntax is a JavaScript expression that makes it possible to unpack values from arrays, or properties from objects, into distinct variables.
