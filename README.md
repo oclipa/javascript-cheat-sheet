@@ -19,7 +19,9 @@ JavaScript is what is termed a multi-paradigm language, which means that it supp
 <!-- =========================#####################################################================================ -->
 <div id="pi">
   <button type="button" class="collapsible">+ Prototypal Inheritance: <br/>
-<code class="ex">Obj.prototype</code>
+<code class="ex">
+Obj.prototype
+</code>   
   </button>      
 <div class="content" style="display: none;" markdown="1">
 
@@ -111,7 +113,9 @@ myWiderOptions = Object.assign(
 <!-- =========================#####################################################================================ -->
 <div id="fp">
 <button type="button" class="collapsible">+ Functional Programming: <br/>
-<code class="ex">f(g(x))</code>
+<code class="ex">
+f(g(x))
+</code>   
   </button>      
 <div class="content" style="display: none;" markdown="1">
 
@@ -233,7 +237,9 @@ These features are typically enabled by combining **lambdas** (abstractions that
 <!-- =========================#####################################################================================ -->
 <div id="purefunc">
 <button type="button" class="collapsible">+ Pure Functions: <br/>
-<code class="ex">no side-effects</code>
+<code class="ex">
+no side-effects
+</code>   
   </button>      
 <div class="content" style="display: none;" markdown="1">
 
@@ -256,7 +262,9 @@ In an ideal world, an application would be composed entirely of pure functions. 
 <!-- =========================#####################################################================================ -->
 <div id="lambda">
 <button type="button" class="collapsible">+ Lambdas: <br/>
-<code class="ex">functions treated as data</code>
+<code class="ex">
+functions treated as data
+</code>   
   </button>      
 <div class="content" style="display: none;" markdown="1">
 
@@ -280,7 +288,7 @@ const func = () => {
   const i = 0; 
   return closure(i); 
 } 
-</code>
+</code>   
   </button>      
 <div class="content" style="display: none;" markdown="1">
 
@@ -430,7 +438,9 @@ ask(james, "skyfall"); // "spy"
 <!-- =========================#####################################################================================ -->
 <div id="curry">
 <button type="button" class="collapsible">+ Currying: <br/>
-<code class="ex">nested functions</code>
+<code class="ex">
+nested functions
+</code>   
   </button>      
 <div class="content" style="display: none;" markdown="1">
 
@@ -547,7 +557,9 @@ The ability for a curry to encapsulate an asynchronous function and return the r
 <!-- =========================#####################################################================================ -->
 <div id="hof">
 <button type="button" class="collapsible">+ Higher Order Functions: <br/>
-<code class="ex">functions that add functionality to other functions, or compose functionality from several functions</code>
+<code class="ex">
+functions that add functionality to other functions, or compose functionality from several functions
+</code>   
   </button>      
 <div class="content" style="display: none;" markdown="1">
 
@@ -585,7 +597,9 @@ console.log(lenArray);
 <!-- =========================#####################################################================================ -->
 <div id="oneway">
 <button type="button" class="collapsible">+ One-Way Data Flow: <br/>
-<code class="ex">one source of truth</code>
+<code class="ex">
+one source of truth
+</code>   
   </button>      
 <div class="content" style="display: none;" markdown="1">
 
@@ -846,7 +860,9 @@ export default Quote;
 <!-- =========================#####################################################================================ -->
 <div id="twoway">
 <button type="button" class="collapsible">+ Two-Way Data Binding: <br/>
-<code class="ex">immediate propagation</code>
+<code class="ex">
+immediate propagation
+</code>   
   </button>      
 <div class="content" style="display: none;" markdown="1">
 
@@ -904,7 +920,9 @@ Cons:
 <!-- =========================#####################################################================================ -->
 <div id="async">
 <button type="button" class="collapsible">+ Asynchronous Programming: <br/>
-<code class="ex">async, await</code>
+<code class="ex">
+async, await
+</code>   
   </button>      
 <div class="content" style="display: none;" markdown="1">
 
@@ -925,7 +943,7 @@ Asynchronous programming is much better suited to UIs, or applications that depe
   .then(resolved,rejected)
   .catch(onError)
   .finally(finalize); 
-</code>
+</code>      
   </button>      
 <div class="content" style="display: none;" markdown="1">
 
@@ -1174,7 +1192,9 @@ After installing NodeJS, it is recommended to also install the following package
 <!-- =========================#####################################################================================ -->
 <div id="simple-cmd-app">
 <button type="button" class="collapsible">+ A Simple Command-Line App: <br/>
-<code class="ex">node app.js --a=x --b=y</code>
+<code class="ex">
+node app.js --a=x --b=y
+</code>   
   </button>      
 <div class="content" style="display: none;" markdown="1">
   
@@ -1262,7 +1282,9 @@ There is much more that `yargs` enables; see the following for further informati
 <!-- =========================#####################################################================================ -->
 <div id="simple-web-app">
 <button type="button" class="collapsible">+ A Simple Web App: <br/>
-<code class="ex">python -m http.server 8000</code>
+<code class="ex">
+python -m http.server 8000
+</code>   
   </button>      
 <div class="content" style="display: none;" markdown="1">
 
@@ -1345,7 +1367,9 @@ catButton.addEventListener('click', (evt) => {
 <!-- =========================#####################################################================================ -->
 <div id="modules">
 <button type="button" class="collapsible">+ Modules: <br/>
-<code class="ex">import, export</code>
+<code class="ex">
+import, export
+</code>   
   </button>      
 <div class="content" style="display: none;" markdown="1">
 
@@ -1386,13 +1410,14 @@ export const pi = 3.14159
 
 <!-- =========================#####################################################================================ -->
 <div id="createobj">
-<button type="button" class="collapsible">+ Creating An Object<code class="ex">
+<button type="button" class="collapsible">+ Creating An Object
+<code class="ex">
 Using an Object Literal: let obj = { }
 Using Object.create()/.assign(): create from prototype or assign properties from source instance
 Using a Factory Function: wrapping create/assign in a function.
 Using Prototypal Inheritance: obj.prototype
 Using Classes: class SubX extends BaseX { constructor(c, d, e) { super(c, d); this.p3 = e; } }
-</code>
+</code>    
   </button>   
 <div class="content" style="display: none;" markdown="1">
 
@@ -1669,7 +1694,9 @@ console.log(mouse.describe());
 <!-- =========================#####################################################================================ -->
 <div id="defaults">
 <button type="button" class="collapsible">+ Default Values: <br/>
-<code class="ex">[a = defA, b = defB], ({ val = defV } = {}) => { }</code>
+<code class="ex">
+[a = defA, b = defB], ({ val = defV } = {}) => { }
+</code>   
   </button>      
 <div class="content" style="display: none;" markdown="1">
 
@@ -1726,7 +1753,9 @@ With the release of ES6, avoid using `var`.
 <!-- =========================#####################################################================================ -->
 <div id="function">
 <button type="button" class="collapsible">+ Function Syntax: <br/>
-<code class="ex">anonymous, named, arrow &amp; self-executing</code>
+<code class="ex">
+anonymous, named, arrow &amp; self-executing
+</code>   
   </button>      
 <div class="content" style="display: none;" markdown="1">
 
@@ -1767,7 +1796,9 @@ With the release of ES6, avoid using `var`.
 <!-- =========================#####################################################================================ -->
 <div id="methods">
 <button type="button" class="collapsible">+ Methods vs Functions: <br/>
-<code class="ex">function: f(x); method: g.f(x)</code>
+<code class="ex">
+function: f(x); method: g.f(x)
+</code>   
   </button>      
 <div class="content" style="display: none;" markdown="1">
 
@@ -1796,7 +1827,9 @@ For those coming from languages such as C#, it may be useful to think of functio
 <!-- =========================#####################################################================================ -->
 <div id="iife">
 <button type="button" class="collapsible">+ Immediately-Invoked Function Expressions (IIFE): <br/>
-<code class="ex">(() => { })()</code>
+<code class="ex">
+(() => { })()
+</code>   
   </button>      
 <div class="content" style="display: none;" markdown="1">
 
@@ -1832,7 +1865,9 @@ document.addEventListener('DOMContentLoaded', onDocumentLoad);
 <!-- =========================#####################################################================================ -->
 <div id="arrow">
 <button type="button" class="collapsible">+ Arrow Functions: <br/>
-<code class="ex">() => {func}, () => ({obj})</code>
+<code class="ex">
+() => {func}, () => ({obj})
+</code>   
   </button>      
 <div class="content" style="display: none;" markdown="1">
 
@@ -1882,7 +1917,7 @@ const Obj = {
   get func() { return }, 
   set func(val) {} 
 }
-</code>
+</code>   
   </button>      
 <div class="content" style="display: none;" markdown="1">
 
@@ -1902,7 +1937,9 @@ const Car = {
 <!-- =========================#####################################################================================ -->
 <div id="extract-values">
 <button type="button" class="collapsible">+ Extracting Values From Objects: <br/>
-<code class="ex">Object.values(), Object.entries()</code>
+<code class="ex">
+Object.values(), Object.entries()
+</code>   
   </button>      
 <div class="content" style="display: none;" markdown="1">
 
@@ -1921,7 +1958,9 @@ Object.entries(langCode)
 <!-- =========================#####################################################================================ -->
 <div id="spread">
 <button type="button" class="collapsible">+ Spread and Rest Operators: <br/>
-<code class="ex">...</code>
+<code class="ex">
+...
+</code>   
   </button>      
 <div class="content" style="display: none;" markdown="1">
 
@@ -1985,7 +2024,9 @@ function sortArgs(...args) {
 <!-- =========================#####################################################================================ -->
 <div id="destruct">
 <button type="button" class="collapsible">+ Destructuring: <br/>
-<code class="ex">[a, b] = [x, y] or { a, b } = { x, y }</code>
+<code class="ex">
+[a, b] = [x, y] or { a, b } = { x, y }
+</code>   
   </button>      
 <div class="content" style="display: none;" markdown="1">
 
@@ -2037,7 +2078,9 @@ function Greeting({name, ...restProps}) {
 <!-- =========================#####################################################================================ -->
 <div id="array">
 <button type="button" class="collapsible">+ Array Functions: <br/>
-<code class="ex">map() etc.</code>
+<code class="ex">
+map() etc.
+</code>   
   </button>      
 <div class="content" style="display: none;" markdown="1">
 
@@ -2286,7 +2329,9 @@ console.log(months);
 <!-- =========================#####################################################================================ -->
 <div id="template">
 <button type="button" class="collapsible">+ Template Literals/Strings: <br/>
-<code class="ex">&#96;text ${expression} text&#96;</code>
+<code class="ex">
+&#96;text ${expression} text&#96;
+</code>   
   </button>      
 <div class="content" style="display: none;" markdown="1">
 
@@ -2335,7 +2380,9 @@ Further information regarding template literals can be found here:
 <!-- =========================#####################################################================================ -->
 <div id="convertStringToProp">
 <button type="button" class="collapsible">+ Converting a String to a Property Name: <br/>
-<code class="ex">myObj["foo.Bar"]</code>
+<code class="ex">
+myObj["foo.Bar"]
+</code>   
   </button>      
 <div class="content" style="display: none;" markdown="1">
 
@@ -2386,7 +2433,9 @@ var foo = myResponse["foo.Bar"]; // correct syntax
 <!-- =========================#####################################################================================ -->
 <div id="convertStringTONum">
 <button type="button" class="collapsible">+ Converting a String to a Number: <br/>
-<code class="ex">+, *1</code>
+<code class="ex">
++, *1
+</code>   
   </button>      
 <div class="content" style="display: none;" markdown="1">
 
@@ -2419,7 +2468,9 @@ In summary:
 <!-- =========================#####################################################================================ -->
 <div id="convertJsonToObject">
 <button type="button" class="collapsible">+ Converting JSON to an Object: <br/>
-<code class="ex">tryParse()</code>
+<code class="ex">
+tryParse()
+</code>   
   </button>      
 <div class="content" style="display: none;" markdown="1">
 
@@ -2465,7 +2516,9 @@ This can be used in the following manner:
 <!-- =========================#####################################################================================ -->
 <div id="generators">
 <button type="button" class="collapsible">+ Generators: <br/>
-<code class="ex">function*, yield, next()</code>
+<code class="ex">
+function*, yield, next()
+</code>   
   </button>      
 <div class="content" style="display: none;" markdown="1">
 
@@ -2717,7 +2770,7 @@ function MyException(message, metadata) {
   return error;
 }
 MyException.prototype = Object.create(Error.prototype);
-</code>
+</code>   
   </button>      
 <div class="content" style="display: none;" markdown="1">
 
@@ -2783,7 +2836,9 @@ class KilledException extends Error {
 <!-- =========================#####################################################================================ -->
 <div id="semi">
 <button type="button" class="collapsible">+ Semi-Colons!: <br/>
-<code class="ex">use ESLint and Prettier and don't worry about it!</code>
+<code class="ex">
+use ESLint and Prettier and don't worry about it!
+</code>   
   </button>   
 <div class="content" style="display: none;" markdown="1">
 
