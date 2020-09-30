@@ -16,8 +16,11 @@ JavaScript is what is termed a multi-paradigm language, which means that it supp
    * Prototypal Inheritance
    * Functional Programming
 
+<!-- =========================#####################################################================================ -->
 <div id="pi">
-  <button type="button" class="collapsible">+ Prototypal Inheritance: <br/><code class="ex">Obj.prototype</code></button>   
+  <button type="button" class="collapsible">+ Prototypal Inheritance: <br/>
+<code class="ex">Obj.prototype</code>
+  </button>      
 <div class="content" style="display: none;" markdown="1">
 
 * Objects without classes.
@@ -105,8 +108,11 @@ myWiderOptions = Object.assign(
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="fp">
-<button type="button" class="collapsible">+ Functional Programming: <br/><code class="ex">f(g(x))</code></button>   
+<button type="button" class="collapsible">+ Functional Programming: <br/>
+<code class="ex">f(g(x))</code>
+  </button>      
 <div class="content" style="display: none;" markdown="1">
 
 At it's core, functional programming is based on the four main principles:
@@ -224,8 +230,11 @@ These features are typically enabled by combining **lambdas** (abstractions that
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="purefunc">
-<button type="button" class="collapsible">+ Pure Functions: <br/><code class="ex">no side-effects</code></button>   
+<button type="button" class="collapsible">+ Pure Functions: <br/>
+<code class="ex">no side-effects</code>
+  </button>      
 <div class="content" style="display: none;" markdown="1">
 
 A pure function is one that:
@@ -244,8 +253,11 @@ In an ideal world, an application would be composed entirely of pure functions. 
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="lambda">
-<button type="button" class="collapsible">+ Lambdas: <br/><code class="ex">functions treated as data</code></button>   
+<button type="button" class="collapsible">+ Lambdas: <br/>
+<code class="ex">functions treated as data</code>
+  </button>      
 <div class="content" style="display: none;" markdown="1">
 
 Lambda expressions are abstractions that enable a function to be passed around like data.  In other languages that support them, lambda expressions are normally identified by arrow notation (`=>`), but this is not the case in JavaScript.
@@ -257,8 +269,10 @@ In summary: Lambda means "function used as data".
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="closures">
-<button type="button" class="collapsible">+ Closures: <br/><code class="ex">
+<button type="button" class="collapsible">+ Closures: <br/>
+<code class="ex">
 const func = () => { 
   const closure = (v) => { 
     return v; 
@@ -266,7 +280,8 @@ const func = () => {
   const i = 0; 
   return closure(i); 
 } 
-</code></button>   
+</code>
+  </button>      
 <div class="content" style="display: none;" markdown="1">
 
 A more in-depth discussion of closures is given [here](https://oclipa.github.io/csharp-cheat-sheet/#closures?expand) (in the context of C#, but the general principles apply to JavaScript).  
@@ -412,8 +427,11 @@ ask(james, "skyfall"); // "spy"
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="curry">
-<button type="button" class="collapsible">+ Currying: <br/><code class="ex">nested functions</code></button>   
+<button type="button" class="collapsible">+ Currying: <br/>
+<code class="ex">nested functions</code>
+  </button>      
 <div class="content" style="display: none;" markdown="1">
 
 Currying is a process in functional programming in which we can transform a function with multiple arguments into a sequence of nesting functions. It returns a new function that expects the next argument inline.
@@ -526,8 +544,11 @@ The ability for a curry to encapsulate an asynchronous function and return the r
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="hof">
-<button type="button" class="collapsible">+ Higher Order Functions: <br/><code class="ex">functions that add functionality to other functions, or compose functionality from several functions</code></button>   
+<button type="button" class="collapsible">+ Higher Order Functions: <br/>
+<code class="ex">functions that add functionality to other functions, or compose functionality from several functions</code>
+  </button>      
 <div class="content" style="display: none;" markdown="1">
 
 Higher Order Functions are fundamental to the way JavaScript works.  Essentially they allow functions to be composed together, to return another function. 
@@ -561,8 +582,11 @@ console.log(lenArray);
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="oneway">
-<button type="button" class="collapsible">+ One-Way Data Flow: <br/><code class="ex">one source of truth</code></button>   
+<button type="button" class="collapsible">+ One-Way Data Flow: <br/>
+<code class="ex">one source of truth</code>
+  </button>      
 <div class="content" style="display: none;" markdown="1">
 
 * One-way data flow means that the model is the single source of truth.
@@ -819,8 +843,11 @@ export default Quote;
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="twoway">
-<button type="button" class="collapsible">+ Two-Way Data Binding: <br/><code class="ex">immediate propagation</code></button>   
+<button type="button" class="collapsible">+ Two-Way Data Binding: <br/>
+<code class="ex">immediate propagation</code>
+  </button>      
 <div class="content" style="display: none;" markdown="1">
 
 Two-way binding just means that:
@@ -845,6 +872,7 @@ Cons:
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="mono">
 <button type="button" class="collapsible">+ Monolithic vs Microservice Architectures</button>   
 <div class="content" style="display: none;" markdown="1">
@@ -873,8 +901,11 @@ Cons:
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="async">
-<button type="button" class="collapsible">+ Asynchronous Programming: <br/><code class="ex">async, await</code></button>   
+<button type="button" class="collapsible">+ Asynchronous Programming: <br/>
+<code class="ex">async, await</code>
+  </button>      
 <div class="content" style="display: none;" markdown="1">
 
 Synchronous programming means that code is executed sequentially and will block on longer running tasks.
@@ -886,13 +917,16 @@ Asynchronous programming is much better suited to UIs, or applications that depe
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="promise">
-<button type="button" class="collapsible">+ Promises: <br/><code class="ex">
+<button type="button" class="collapsible">+ Promises: <br/>
+<code class="ex">
 (new Promise(executor))
   .then(resolved,rejected)
   .catch(onError)
   .finally(finalize); 
-</code></button>   
+</code>
+  </button>      
 <div class="content" style="display: none;" markdown="1">
 
 A promise is an object that may produce a single value at some time in the future.  This could be a resolved value, or a reason why it was not resolved.
@@ -1111,6 +1145,7 @@ parallel();
 
 ## Basics
 
+<!-- =========================#####################################################================================ -->
 <div id="nodejs">
 <button type="button" class="collapsible">+ Installing NodeJS</button>   
 <div class="content" style="display: none;" markdown="1">
@@ -1136,8 +1171,11 @@ After installing NodeJS, it is recommended to also install the following package
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="simple-cmd-app">
-<button type="button" class="collapsible">+ A Simple Command-Line App: <br/><code class="ex">node app.js --a=x --b=y</code></button>   
+<button type="button" class="collapsible">+ A Simple Command-Line App: <br/>
+<code class="ex">node app.js --a=x --b=y</code>
+  </button>      
 <div class="content" style="display: none;" markdown="1">
   
 NodeJs must be installed in order to run JavaScript on the command line.
@@ -1221,8 +1259,11 @@ There is much more that `yargs` enables; see the following for further informati
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="simple-web-app">
-<button type="button" class="collapsible">+ A Simple Web App: <br/><code class="ex">python -m http.server 8000</code></button>   
+<button type="button" class="collapsible">+ A Simple Web App: <br/>
+<code class="ex">python -m http.server 8000</code>
+  </button>      
 <div class="content" style="display: none;" markdown="1">
 
 To start a simple web server for testing JavaScript web apps, install the `http-server` package from npm: 
@@ -1260,9 +1301,11 @@ The web app can then be viewed in any browser by visiting:
     <script defer src="src/index.js" charset="utfs-8"></script>
   </head>
   <body>
-    <div id="quotes"></div>
+    <!-- =========================#####################################################================================ -->
+<div id="quotes"></div>
     <button id="give-cat">GIVE ME A CAT!</button>
-    <div id="cat-pic"></div>
+    <!-- =========================#####################################################================================ -->
+<div id="cat-pic"></div>
   </body>
 </html>
 ```
@@ -1299,8 +1342,11 @@ catButton.addEventListener('click', (evt) => {
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="modules">
-<button type="button" class="collapsible">+ Modules: <br/><code class="ex">import, export</code></button>   
+<button type="button" class="collapsible">+ Modules: <br/>
+<code class="ex">import, export</code>
+  </button>      
 <div class="content" style="display: none;" markdown="1">
 
 **Importing in ES6**
@@ -1338,6 +1384,7 @@ export const pi = 3.14159
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="createobj">
 <button type="button" class="collapsible">+ Creating An Object<code class="ex">
 Using an Object Literal: let obj = { }
@@ -1345,7 +1392,8 @@ Using Object.create()/.assign(): create from prototype or assign properties from
 Using a Factory Function: wrapping create/assign in a function.
 Using Prototypal Inheritance: obj.prototype
 Using Classes: class SubX extends BaseX { constructor(c, d, e) { super(c, d); this.p3 = e; } }
-</code></button>
+</code>
+  </button>   
 <div class="content" style="display: none;" markdown="1">
 
 There are several approaches to creating objects in JavaScript (as shown above).  As a general rule of thumb, directly manipulating a prototype, or using classes, should be avoided, since these create problems for functional programming.
@@ -1618,8 +1666,11 @@ console.log(mouse.describe());
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="defaults">
-<button type="button" class="collapsible">+ Default Values: <br/><code class="ex">[a = defA, b = defB], ({ val = defV } = {}) => { }</code></button>   
+<button type="button" class="collapsible">+ Default Values: <br/>
+<code class="ex">[a = defA, b = defB], ({ val = defV } = {}) => { }</code>
+  </button>      
 <div class="content" style="display: none;" markdown="1">
 
 Default array values:
@@ -1646,6 +1697,7 @@ greet({ name: 'Larry' }) // Hi Larry!
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="var">
 <button type="button" class="collapsible">+ var, let &amp; const</button>   
 <div class="content" style="display: none;" markdown="1">
@@ -1671,8 +1723,11 @@ With the release of ES6, avoid using `var`.
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="function">
-<button type="button" class="collapsible">+ Function Syntax: <br/><code class="ex">anonymous, named, arrow &amp; self-executing</code></button>   
+<button type="button" class="collapsible">+ Function Syntax: <br/>
+<code class="ex">anonymous, named, arrow &amp; self-executing</code>
+  </button>      
 <div class="content" style="display: none;" markdown="1">
 
 ```js   
@@ -1709,8 +1764,11 @@ With the release of ES6, avoid using `var`.
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="methods">
-<button type="button" class="collapsible">+ Methods vs Functions: <br/><code class="ex">function: f(x); method: g.f(x)</code></button>   
+<button type="button" class="collapsible">+ Methods vs Functions: <br/>
+<code class="ex">function: f(x); method: g.f(x)</code>
+  </button>      
 <div class="content" style="display: none;" markdown="1">
 
 The difference between a method and a function (in JavaScript) is: 
@@ -1735,8 +1793,11 @@ For those coming from languages such as C#, it may be useful to think of functio
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="iife">
-<button type="button" class="collapsible">+ Immediately-Invoked Function Expressions (IIFE): <br/><code class="ex">(() => { })()</code></button>   
+<button type="button" class="collapsible">+ Immediately-Invoked Function Expressions (IIFE): <br/>
+<code class="ex">(() => { })()</code>
+  </button>      
 <div class="content" style="display: none;" markdown="1">
 
 Immediately Invoked Function Expressions (a.k.a. Self-Executing Functions) are functions which are invoked immediately after being defined, i.e. they don't need to be explicitly called elsewhere in the code.
@@ -1768,8 +1829,11 @@ document.addEventListener('DOMContentLoaded', onDocumentLoad);
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="arrow">
-<button type="button" class="collapsible">+ Arrow Functions: <br/><code class="ex">() => {func}, () => ({obj})</code></button>   
+<button type="button" class="collapsible">+ Arrow Functions: <br/>
+<code class="ex">() => {func}, () => ({obj})</code>
+  </button>      
 <div class="content" style="display: none;" markdown="1">
 
 "Traditional" Function (ES5):
@@ -1810,13 +1874,16 @@ Differences:
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="getset">
-<button type="button" class="collapsible">+ Getters &amp; Setters: <br/><code class="ex">
+<button type="button" class="collapsible">+ Getters &amp; Setters: <br/>
+<code class="ex">
 const Obj = { 
   get func() { return }, 
   set func(val) {} 
 }
-</code></button>   
+</code>
+  </button>      
 <div class="content" style="display: none;" markdown="1">
 
 ```js
@@ -1832,8 +1899,11 @@ const Car = {
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="extract-values">
-<button type="button" class="collapsible">+ Extracting Values From Objects: <br/><code class="ex">Object.values(), Object.entries()</code></button>   
+<button type="button" class="collapsible">+ Extracting Values From Objects: <br/>
+<code class="ex">Object.values(), Object.entries()</code>
+  </button>      
 <div class="content" style="display: none;" markdown="1">
 
 ```js
@@ -1848,8 +1918,11 @@ Object.entries(langCode)
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="spread">
-<button type="button" class="collapsible">+ Spread and Rest Operators: <br/><code class="ex">...</code></button>   
+<button type="button" class="collapsible">+ Spread and Rest Operators: <br/>
+<code class="ex">...</code>
+  </button>      
 <div class="content" style="display: none;" markdown="1">
 
 Both Spread and Rest use the same operator: `...`
@@ -1909,8 +1982,11 @@ function sortArgs(...args) {
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="destruct">
-<button type="button" class="collapsible">+ Destructuring: <br/><code class="ex">[a, b] = [x, y] or { a, b } = { x, y }</code></button>   
+<button type="button" class="collapsible">+ Destructuring: <br/>
+<code class="ex">[a, b] = [x, y] or { a, b } = { x, y }</code>
+  </button>      
 <div class="content" style="display: none;" markdown="1">
 
 The [destructuring assignment](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) syntax is a JavaScript expression that makes it possible to unpack values from arrays, or properties from objects, into distinct variables.
@@ -1958,8 +2034,11 @@ function Greeting({name, ...restProps}) {
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="array">
-<button type="button" class="collapsible">+ Array Functions: <br/><code class="ex">map() etc.</code></button>   
+<button type="button" class="collapsible">+ Array Functions: <br/>
+<code class="ex">map() etc.</code>
+  </button>      
 <div class="content" style="display: none;" markdown="1">
 
 A discussion of the mutating vs non-mutating array functions can be found here:
@@ -2204,8 +2283,11 @@ console.log(months);
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="template">
-<button type="button" class="collapsible">+ Template Literals/Strings: <br/><code class="ex">&#96;text ${expression} text&#96;</code></button>   
+<button type="button" class="collapsible">+ Template Literals/Strings: <br/>
+<code class="ex">&#96;text ${expression} text&#96;</code>
+  </button>      
 <div class="content" style="display: none;" markdown="1">
 
 Template literals (a.k.a. template strings) use ticks marks to indicate that a string can contain placeholders, or is split over multiple lines.
@@ -2250,8 +2332,11 @@ Further information regarding template literals can be found here:
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="convertStringToProp">
-<button type="button" class="collapsible">+ Converting a String to a Property Name: <br/><code class="ex">myObj["foo.Bar"]</code></button>   
+<button type="button" class="collapsible">+ Converting a String to a Property Name: <br/>
+<code class="ex">myObj["foo.Bar"]</code>
+  </button>      
 <div class="content" style="display: none;" markdown="1">
 
 The ability to convert a string to a property name is known as "square bracket" notation.  
@@ -2298,8 +2383,11 @@ var foo = myResponse["foo.Bar"]; // correct syntax
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="convertStringTONum">
-<button type="button" class="collapsible">+ Converting a String to a Number: <br/><code class="ex">+, *1</code></button>   
+<button type="button" class="collapsible">+ Converting a String to a Number: <br/>
+<code class="ex">+, *1</code>
+  </button>      
 <div class="content" style="display: none;" markdown="1">
 
 Further information: [https://stackabuse.com/javascript-convert-string-to-number/](https://stackabuse.com/javascript-convert-string-to-number/)
@@ -2328,8 +2416,11 @@ In summary:
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="convertJsonToObject">
-<button type="button" class="collapsible">+ Converting JSON to an Object: <br/><code class="ex">tryParse()</code></button>   
+<button type="button" class="collapsible">+ Converting JSON to an Object: <br/>
+<code class="ex">tryParse()</code>
+  </button>      
 <div class="content" style="display: none;" markdown="1">
 
 Although JavaScript provides the `JSON.parse(src)` function, this throws an exception if the `src` is not valid JSON, which may not be desirable (it is generally bad practice to use try/catch for expected behaviour).  To avoid this, it is possible to add a `tryParse(src)` function to the `JSON` object.
@@ -2371,8 +2462,11 @@ This can be used in the following manner:
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="generators">
-<button type="button" class="collapsible">+ Generators: <br/><code class="ex">function*, yield, next()</code></button>   
+<button type="button" class="collapsible">+ Generators: <br/>
+<code class="ex">function*, yield, next()</code>
+  </button>      
 <div class="content" style="display: none;" markdown="1">
 
 A generator is a special function that is defined using the `function*` (note that `*`) and `yield` syntax, and exposes the `next()` method.  The difference between this and a normal function is that a generator function can be paused (using `yield`) and resumed (using `next()`).  These functions are most commonly used to simplify iterators, however they are not limited to this.
@@ -2612,8 +2706,10 @@ console.log(iterator.next()); // {value: undefined, done: true}
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="try-catch">
-<button type="button" class="collapsible">+ Exceptions &amp; Try/Catch: <br/><code class="ex">
+<button type="button" class="collapsible">+ Exceptions &amp; Try/Catch: <br/>
+<code class="ex">
 function MyException(message, metadata) {
   const error = new Error(message);
   error.code = "CUSTOM_ERROR_CODE";
@@ -2621,7 +2717,8 @@ function MyException(message, metadata) {
   return error;
 }
 MyException.prototype = Object.create(Error.prototype);
-</code></button>   
+</code>
+  </button>      
 <div class="content" style="display: none;" markdown="1">
 
 This is basically the same as C# and Java:
@@ -2683,8 +2780,11 @@ class KilledException extends Error {
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="semi">
-<button type="button" class="collapsible">+ Semi-Colons!: <br/><code class="ex">use ESLint and Prettier and don't worry about it!</code></button>
+<button type="button" class="collapsible">+ Semi-Colons!: <br/>
+<code class="ex">use ESLint and Prettier and don't worry about it!</code>
+  </button>   
 <div class="content" style="display: none;" markdown="1">
 
 Summarized from:
@@ -2763,10 +2863,12 @@ for (var i=0; i < 10; i++;) {/*actions*/} // SyntaxError
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="data-types">
 <button type="button" class="collapsible">+ To Be Written Up</button>   
 <div class="content" style="display: none;" markdown="1">
 
+<!-- =========================#####################################################================================ -->
 <div id="data-types">
 <button type="button" class="collapsible">+ Data Types</button>   
 <div class="content" style="display: none;" markdown="1">
@@ -2796,6 +2898,7 @@ var myNumber = new Number(2) // instanceof Number == true
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="scope">
 <button type="button" class="collapsible">+ Scope</button>   
 <div class="content" style="display: none;" markdown="1">
@@ -2816,6 +2919,7 @@ let &amp; const honour block level scope; var does not
 </div>
 </div>
 
+<!-- =========================#####################################################================================ -->
 <div id="polyfill">
 <button type="button" class="collapsible">+ Shims &amp; Polyfills</button>   
 <div class="content" style="display: none;" markdown="1">
